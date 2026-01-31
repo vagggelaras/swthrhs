@@ -1,0 +1,91 @@
+/* How It Works */
+.how-it-works {
+  position: relative;
+  z-index: 1;
+  padding: 6rem 2rem;
+  background: linear-gradient(180deg, transparent 0%, rgba(26, 39, 68, 0.3) 50%, transparent 100%);
+}
+
+.how-it-works .section-header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 4rem;
+}
+
+.how-it-works .section-header h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.25rem;
+  margin-bottom: 1rem;
+}
+
+.how-it-works .section-header p {
+  color: var(--gray-400);
+  font-size: 1.1rem;
+}
+
+.steps {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.steps::before {
+  content: '';
+  position: absolute;
+  top: 40px;
+  left: 80px;
+  right: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--ocean), var(--accent));
+  opacity: 0.3;
+}
+
+.step {
+  text-align: center;
+  flex: 1;
+  position: relative;
+}
+
+.step-number {
+  width: 80px;
+  height: 80px;
+  background: var(--deep-blue);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0 auto 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.step h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+}
+
+.step p {
+  color: var(--gray-400);
+  font-size: 0.9rem;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .steps {
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .steps::before {
+    display: none;
+  }
+}

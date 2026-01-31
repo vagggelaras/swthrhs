@@ -1,0 +1,75 @@
+/* Features Section */
+.features {
+  position: relative;
+  z-index: 1;
+  padding: 6rem 2rem;
+}
+
+.features .section-header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 4rem;
+}
+
+.features .section-header h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.25rem;
+  margin-bottom: 1rem;
+}
+
+.features .section-header p {
+  color: var(--gray-400);
+  font-size: 1.1rem;
+}
+
+.features-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.feature-card {
+  background: linear-gradient(145deg, rgba(26, 39, 68, 0.5) 0%, rgba(10, 22, 40, 0.5) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: all 0.4s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(245, 158, 11, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.feature-icon {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.feature-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.feature-card p {
+  color: var(--gray-400);
+  font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+}
