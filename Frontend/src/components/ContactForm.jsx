@@ -6,6 +6,7 @@ import './styles/ContactForm.css'
 
 export default function ContactForm() {
     const [activeService, setActiveService] = useState('electricity')
+    const [toggleOpen, setToggleOpen] = useState(false)
     const [basicInfo, setBasicInfo] = useState({})
     const [throwError, setThrowError] = useState()
     const [step, setStep] = useState(1)
@@ -20,8 +21,15 @@ export default function ContactForm() {
         provider: ''
     })
 
-    const handleToggle = (service) => {
-        setActiveService(service)
+    const handleToggle = (service, isActive) => {
+        if (isActive) {
+            // Αν πατήσει το ήδη επιλεγμένο, toggle το dropdown
+            setToggleOpen(!toggleOpen)
+        } else {
+            // Αν επιλέξει άλλο, αλλάζει και κλείνει
+            setActiveService(service)
+            setToggleOpen(false)
+        }
     }
 
     const handleSubmit = (e) => {
@@ -88,27 +96,30 @@ export default function ContactForm() {
             </div>
 
             <form id="leadForm" onSubmit={handleSubmit}>
-                <div className="service-toggle">
+                <div className={`service-toggle ${toggleOpen ? 'open' : ''}`}>
                     <button
                         type="button"
                         className={`toggle-btn ${activeService === 'electricity' ? 'active' : ''}`}
-                        onClick={() => handleToggle('electricity')}
+                        onClick={() => handleToggle('electricity', activeService === 'electricity')}
                     >
                         ⚡ Ρεύμα
+                        <i className="fa-solid fa-chevron-down toggle-arrow"></i>
                     </button>
                     <button
                         type="button"
                         className={`toggle-btn ${activeService === 'gas' ? 'active' : ''}`}
-                        onClick={() => handleToggle('gas')}
+                        onClick={() => handleToggle('gas', activeService === 'gas')}
                     >
                         🔥 Φ. Αέριο
+                        <i className="fa-solid fa-chevron-down toggle-arrow"></i>
                     </button>
                     <button
                         type="button"
                         className={`toggle-btn ${activeService === 'both' ? 'active' : ''}`}
-                        onClick={() => handleToggle('both')}
+                        onClick={() => handleToggle('both', activeService === 'both')}
                     >
                         ✨ Και τα δύο
+                        <i className="fa-solid fa-chevron-down toggle-arrow"></i>
                     </button>
                 </div>
 
