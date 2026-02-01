@@ -24,8 +24,6 @@ export default function ContactForm() {
         setActiveService(service)
     }
 
-    
-
     const handleSubmit = (e) => {
         e.preventDefault()
         const data = {
@@ -34,6 +32,13 @@ export default function ContactForm() {
         }
         console.log('Form submitted:', data)
         alert('Ευχαριστούμε! Θα σε καλέσουμε σύντομα.')
+    }
+
+    const handleBack = () => {
+        setThrowError(null)
+        if (step > 1) {
+            setStep(step - 1)
+        }
     }
 
     const handleNext = () => {
@@ -112,7 +117,7 @@ export default function ContactForm() {
                 )}
 
                 {(activeService === 'electricity' || activeService === 'both') && step === 2 && (
-                    <ProviderInfo setFormData={setFormData} throwError={throwError} setThrowError={setThrowError} />
+                    <ProviderInfo formData={formData} setFormData={setFormData} throwError={throwError} setThrowError={setThrowError} />
                 )}
 
                 {(activeService === 'electricity' || activeService === 'both') && step === 3 && (
@@ -123,9 +128,16 @@ export default function ContactForm() {
                     <p className="error-message">{throwError}‎ </p>
                 </div>
 
-                <button type="button" onClick={handleNext} className="next-btn">
-                    <i className="fa-solid fa-arrow-right fa-xl"></i>
-                </button>
+                <div className="form-buttons">
+                    {step > 1 && (
+                        <button type="button" onClick={handleBack} className="back-btn">
+                            <i className="fa-solid fa-arrow-left"></i>
+                        </button>
+                    )}
+                    <button type="button" onClick={handleNext} className="next-btn">
+                        {step !== 3 ? <i className="fa-solid fa-arrow-right fa-xl"></i> : 'Θέλω να με καλέσετε'}
+                    </button>
+                </div>
 
             </form>
 

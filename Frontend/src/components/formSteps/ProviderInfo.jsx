@@ -6,13 +6,8 @@ import protergiaLogo from '../../assets/protergiaLogo.svg'
 import zenithLogo from '../../assets/zenithLogo.svg'
 import '../styles/ProviderInfo.css'
 
-import { useState } from 'react'
-
-export default function ProviderInfo({ setFormData, throwError, setThrowError }) {
-    const [selected, setSelected] = useState('')
-
+export default function ProviderInfo({ formData, setFormData, throwError, setThrowError }) {
     const handleSelect = (provider) => {
-        setSelected(provider)
         setFormData(prev => ({ ...prev, provider }))
         if(throwError?.includes('πάροχο')) setThrowError(null)
     }
@@ -33,7 +28,7 @@ export default function ProviderInfo({ setFormData, throwError, setThrowError })
                     key={provider.id}
                     src={provider.src}
                     alt={provider.alt}
-                    className={selected === provider.id ? 'selected' : ''}
+                    className={formData.provider === provider.id ? 'selected' : ''}
                     onClick={() => handleSelect(provider.id)}
                 />
             ))}
