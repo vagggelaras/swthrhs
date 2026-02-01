@@ -124,6 +124,10 @@
     order: 1;
   }
 
+  .hero-content > .form-card {
+    order: 2;
+  }
+
   .hero-description {
     margin-left: auto;
     margin-right: auto;
@@ -142,8 +146,7 @@
 /* Mobile */
 @media (max-width: 640px) {
   .hero {
-    padding: 2rem 1rem 1.5rem;
-    /* padding-top: em; */
+    padding: 5rem 1rem 1.5rem;
   }
 
   .hero-content {
@@ -182,7 +185,7 @@
 /* Very small screens */
 @media (max-width: 360px) {
   .hero {
-    padding: 4.5rem 0.75rem 1rem;
+    padding: 4rem 0.75rem 1rem;
   }
 
   .badge {

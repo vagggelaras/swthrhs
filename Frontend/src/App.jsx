@@ -10,7 +10,10 @@ import Footer from './components/Footer'
 
 function App() {
   const scrollToForm = () => {
-    document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth' })
+    document.querySelector('.form-card').scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+    })
   }
 
   return (
