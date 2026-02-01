@@ -81,7 +81,7 @@ export default function ContactForm() {
     }
 
     return (
-        <div className={`form-card${step === 3 ? ' form-card-expanded' : ''}`}>
+        <div className="form-card">
             <div className="form-header">
                 <h2>Λάβε Δωρεάν Προσφορά</h2>
                 <p>Συμπλήρωσε τα στοιχεία σου και θα σε καλέσουμε</p>
@@ -112,17 +112,19 @@ export default function ContactForm() {
                     </button>
                 </div>
 
-                {(activeService === 'electricity' || activeService === 'both') && step === 1 && (
-                    <BasicInfo formData={formData} setFormData={setFormData} throwError={throwError} setThrowError={setThrowError} />
-                )}
+                <div className="form-step-content">
+                    {(activeService === 'electricity' || activeService === 'both') && step === 1 && (
+                        <BasicInfo formData={formData} setFormData={setFormData} throwError={throwError} setThrowError={setThrowError} />
+                    )}
 
-                {(activeService === 'electricity' || activeService === 'both') && step === 2 && (
-                    <ProviderInfo formData={formData} setFormData={setFormData} throwError={throwError} setThrowError={setThrowError} />
-                )}
+                    {(activeService === 'electricity' || activeService === 'both') && step === 2 && (
+                        <ProviderInfo formData={formData} setFormData={setFormData} throwError={throwError} setThrowError={setThrowError} />
+                    )}
 
-                {(activeService === 'electricity' || activeService === 'both') && step === 3 && (
-                    <SpecificInfo formData={formData} setFormData={setFormData} setThrowError={setThrowError} />
-                )}
+                    {(activeService === 'electricity' || activeService === 'both') && step === 3 && (
+                        <SpecificInfo formData={formData} setFormData={setFormData} setThrowError={setThrowError} />
+                    )}
+                </div>
 
                 <div className={throwError ? "error-container" : "error-container hidden"}>
                     <p className="error-message">{throwError}‎ </p>

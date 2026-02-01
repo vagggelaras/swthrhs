@@ -142,7 +142,8 @@
 /* Mobile */
 @media (max-width: 640px) {
   .hero {
-    padding: 5rem 1rem 1.5rem;
+    padding: 2rem 1rem 1.5rem;
+    /* padding-top: em; */
   }
 
   .hero-content {

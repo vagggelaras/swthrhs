@@ -5,8 +5,8 @@ nav {
   left: 0;
   right: 0;
   z-index: 100;
-  padding: 1.25rem 2rem;
-  background: rgba(10, 22, 40, 0.8);
+  padding: 1rem 2rem;
+  background: rgba(10, 22, 40, 0.85);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -17,43 +17,124 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
 }
 
 .logo {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.5rem;
+  font-size: clamp(1.1rem, 3.5vw, 1.5rem);
   font-weight: 700;
   color: var(--white);
   text-decoration: none;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  white-space: nowrap;
 }
 
 .logo-icon {
-  width: 36px;
-  height: 36px;
+  width: clamp(30px, 8vw, 36px);
+  height: clamp(30px, 8vw, 36px);
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  flex-shrink: 0;
 }
 
 .nav-cta {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--white);
-  padding: 0.75rem 1.5rem;
+  padding: 0.65rem 1.25rem;
   border-radius: 50px;
+  font-family: inherit;
   font-weight: 600;
+  font-size: clamp(0.8rem, 2.5vw, 0.9rem);
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 0.9rem;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .nav-cta:hover {
   background: var(--white);
   color: var(--midnight);
+}
+
+.nav-cta:active {
+  transform: scale(0.98);
+}
+
+/* ========== RESPONSIVE ========== */
+
+/* Tablets */
+@media (max-width: 768px) {
+  nav {
+    padding: 0.875rem 1.5rem;
+  }
+
+  .logo {
+    gap: 0.4rem;
+  }
+
+  .logo-icon {
+    border-radius: 8px;
+  }
+
+  .nav-cta {
+    padding: 0.6rem 1rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  nav {
+    padding: 0.75rem 1rem;
+  }
+
+  .nav-content {
+    gap: 0.75rem;
+  }
+
+  .logo {
+    gap: 0.35rem;
+  }
+
+  .logo-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    font-size: 0.9rem;
+  }
+
+  .nav-cta {
+    padding: 0.5rem 0.875rem;
+    font-size: 0.8rem;
+    border-radius: 25px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 360px) {
+  nav {
+    padding: 0.65rem 0.75rem;
+  }
+
+  .logo {
+    font-size: 1rem;
+  }
+
+  .logo-icon {
+    width: 26px;
+    height: 26px;
+    font-size: 0.85rem;
+  }
+
+  .nav-cta {
+    padding: 0.45rem 0.75rem;
+    font-size: 0.75rem;
+  }
 }

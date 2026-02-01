@@ -40,6 +40,14 @@
   gap: 0.25rem;
 }
 
+/* Step Content - Fixed Height Container */
+.form-step-content {
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
 .toggle-btn {
   flex: 1;
   padding: 0.75rem 0.5rem;
@@ -390,11 +398,16 @@
   .submit-btn {
     padding: 0.875rem;
   }
+
+  .form-step-content {
+    min-height: 200px;
+  }
 }
 
 /* Mobile */
 @media (max-width: 480px) {
   .form-card {
+    margin-top: 5rem;
     padding: 1.25rem;
     border-radius: 16px;
   }
@@ -469,12 +482,17 @@
     font-size: 0.75rem;
     margin-top: 0.75rem;
   }
+
+  .form-step-content {
+    min-height: 280px;
+  }
 }
 
 /* Very small screens */
 @media (max-width: 360px) {
   .form-card {
     padding: 1rem;
+    margin-top:3rem;
   }
 
   .toggle-btn {
@@ -494,5 +512,9 @@
 
   .back-btn {
     padding: 0.7rem 0.8rem;
+  }
+
+  .form-step-content {
+    min-height: 260px;
   }
 }
