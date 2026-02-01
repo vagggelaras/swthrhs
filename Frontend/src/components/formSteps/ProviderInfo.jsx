@@ -1,3 +1,11 @@
+import deiLogo from '../../assets/deiLogo.svg'
+import enerwaveLogo from '../../assets/enerwaveLogo.svg'
+import eyniceLogo from '../../assets/eyniceLogo.svg'
+import hrwnLogo from '../../assets/hrwnLogo.svg'
+import protergiaLogo from '../../assets/protergiaLogo.svg'
+import zenithLogo from '../../assets/zenithLogo.svg'
+import '../styles/ProviderInfo.css'
+
 import { useState } from 'react'
 
 export default function ProviderInfo({ setFormData, throwError, setThrowError }) {
@@ -10,12 +18,12 @@ export default function ProviderInfo({ setFormData, throwError, setThrowError })
     }
 
     const providers = [
-        { id: 'dei', src: '/deiLogo.svg', alt: 'ΔΕΗ' },
-        { id: 'enerwave', src: '/enerwaveLogo.svg', alt: 'Enerwave' },
-        { id: 'eynice', src: '/eyniceLogo.svg', alt: 'Eynice' },
-        { id: 'hron', src: '/hrwnLogo.svg', alt: 'Ήρων' },
-        { id: 'protergia', src: '/protergiaLogo.svg', alt: 'Protergia' },
-        { id: 'zenith', src: '/zenithLogo.svg', alt: 'Zenith' }
+        { id: 'dei', src: deiLogo, alt: 'ΔΕΗ' },
+        { id: 'enerwave', src: enerwaveLogo, alt: 'Enerwave' },
+        { id: 'eynice', src: eyniceLogo, alt: 'Eynice' },
+        { id: 'hron', src: hrwnLogo, alt: 'Ήρων' },
+        { id: 'protergia', src: protergiaLogo, alt: 'Protergia' },
+        { id: 'zenith', src: zenithLogo, alt: 'Zenith' }
     ]
 
     return (
@@ -27,7 +35,6 @@ export default function ProviderInfo({ setFormData, throwError, setThrowError })
                     alt={provider.alt}
                     className={selected === provider.id ? 'selected' : ''}
                     onClick={() => handleSelect(provider.id)}
-                    style={{width:'100px', height:'100px'}}
                 />
             ))}
         </div>
