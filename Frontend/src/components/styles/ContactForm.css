@@ -1,10 +1,11 @@
 /* Form Card */
 .form-card {
-  background: linear-gradient(145deg, rgba(26, 39, 68, 0.8) 0%, rgba(10, 22, 40, 0.9) 100%);
+  /* background: linear-gradient(145deg, rgba(26, 39, 68, 0.8) 0%, rgba(10, 22, 40, 0.9) 100%); */
+  background: linear-gradient(145deg, rgba(26, 39, 68, 0.5) 0%, rgba(10, 22, 40, 0.5) 100%);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
   padding: 2rem;
-  backdrop-filter: blur(20px);
+  /* backdrop-filter: blur(4px); */
   box-shadow:
     0 25px 50px -12px rgba(0, 0, 0, 0.5),
     0 0 0 1px rgba(255, 255, 255, 0.05) inset;
@@ -12,6 +13,13 @@
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.form-content {
+  position: relative;
+  z-index: 1;
 }
 
 .form-header {
@@ -23,10 +31,12 @@
   font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(1.25rem, 4vw, 1.5rem);
   margin-bottom: 0.25rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .form-header p {
   color: var(--gray-400);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   font-size: clamp(0.85rem, 2.5vw, 0.95rem);
 }
 
@@ -86,7 +96,7 @@
 
 /* Form Group */
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .form-group label {
@@ -265,8 +275,8 @@
 
 .back-btn {
   padding: 1rem 1.25rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 12px;
   color: var(--gray-200);
   font-family: inherit;
@@ -276,6 +286,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .back-btn:hover {
@@ -304,11 +316,12 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  box-shadow: 0 4px 20px var(--accent-glow), 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .next-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px var(--accent-glow);
+  box-shadow: 0 8px 30px var(--accent-glow), 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .next-btn:active {

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import './App.css'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
@@ -9,6 +10,8 @@ import CTA from './components/CTA'
 import Footer from './components/Footer'
 
 function App() {
+  const [lightningOn, setLightningOn] = useState(true)
+
   const scrollToForm = () => {
     document.querySelector('.form-card').scrollIntoView({
       behavior: 'smooth',
@@ -16,13 +19,18 @@ function App() {
     })
   }
 
+  const handleCtaClick = () => {
+    setLightningOn(prev => !prev)
+    scrollToForm()
+  }
+
   return (
     <>
       <div className="bg-pattern"></div>
       <div className="grid-overlay"></div>
 
-      <Nav onCtaClick={scrollToForm} />
-      <Hero />
+      <Nav onCtaClick={handleCtaClick} />
+      <Hero lightningOn={lightningOn} />
       <Features />
       <HowItWorks />
       <Testimonials />

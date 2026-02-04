@@ -2,9 +2,10 @@ import { useState } from 'react'
 import SpecificInfo from './formSteps/SpecificInfo'
 import BasicInfo from './formSteps/BasicInfo'
 import ProviderInfo from './formSteps/ProviderInfo'
+import Lightning from './LighitngBackground'
 import './styles/ContactForm.css'
 
-export default function ContactForm() {
+export default function ContactForm({ lightningOn }) {
     const [activeService, setActiveService] = useState('electricity')
     const [toggleOpen, setToggleOpen] = useState(false)
     const [basicInfo, setBasicInfo] = useState({})
@@ -90,6 +91,16 @@ export default function ContactForm() {
 
     return (
         <div className="form-card">
+            {lightningOn && (
+                <Lightning
+                    hue={260}
+                    xOffset={0}
+                    speed={.5}
+                    intensity={0.6}
+                    size={1}
+                />
+            )}
+            <div className="form-content">
             <div className="form-header">
                 <h2>Λάβε Δωρεάν Προσφορά</h2>
                 <p>Συμπλήρωσε τα στοιχεία σου και θα σε καλέσουμε</p>
@@ -102,7 +113,7 @@ export default function ContactForm() {
                         className={`toggle-btn ${activeService === 'electricity' ? 'active' : ''}`}
                         onClick={() => handleToggle('electricity', activeService === 'electricity')}
                     >
-                        ⚡ Ρεύμα
+                            {/* ⚡  */}Ρεύμα
                         <i className="fa-solid fa-chevron-down toggle-arrow"></i>
                     </button>
                     <button
@@ -110,7 +121,7 @@ export default function ContactForm() {
                         className={`toggle-btn ${activeService === 'gas' ? 'active' : ''}`}
                         onClick={() => handleToggle('gas', activeService === 'gas')}
                     >
-                        🔥 Φ. Αέριο
+                        {/*🔥*/} Φ. Αέριο
                         <i className="fa-solid fa-chevron-down toggle-arrow"></i>
                     </button>
                     <button
@@ -118,7 +129,7 @@ export default function ContactForm() {
                         className={`toggle-btn ${activeService === 'both' ? 'active' : ''}`}
                         onClick={() => handleToggle('both', activeService === 'both')}
                     >
-                        ✨ Και τα δύο
+                        {/*✨*/} Και τα δύο
                         <i className="fa-solid fa-chevron-down toggle-arrow"></i>
                     </button>
                 </div>
@@ -161,6 +172,7 @@ export default function ContactForm() {
                 </svg>
                 Τα στοιχεία σου είναι ασφαλή
             </p>
-        </div>    
+            </div>
+        </div>
     )
 }
