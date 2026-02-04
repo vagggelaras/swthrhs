@@ -34,6 +34,7 @@ const Lightning = ({ hue = 230, xOffset = 0, speed = 1, intensity = 1, size = 1 
       uniform float iTime;
       uniform float uHue;
       uniform float uXOffset;
+      uniform float uYOffset;
       uniform float uSpeed;
       uniform float uIntensity;
       uniform float uSize;
@@ -94,6 +95,7 @@ const Lightning = ({ hue = 230, xOffset = 0, speed = 1, intensity = 1, size = 1 
           uv = 2.0 * uv - 1.0;
           uv.x *= iResolution.x / iResolution.y;
           uv.x += uXOffset;
+          uv.y += uYOffset;
 
           // Rotate for diagonal (dynamic based on aspect ratio)
           uv = rotate2d(uRotation) * uv;
@@ -153,6 +155,7 @@ const Lightning = ({ hue = 230, xOffset = 0, speed = 1, intensity = 1, size = 1 
         const iTimeLocation = gl.getUniformLocation(program, 'iTime');
         const uHueLocation = gl.getUniformLocation(program, 'uHue');
         const uXOffsetLocation = gl.getUniformLocation(program, 'uXOffset');
+        const uYOffsetLocation = gl.getUniformLocation(program, 'uYOffset');
         const uSpeedLocation = gl.getUniformLocation(program, 'uSpeed');
         const uIntensityLocation = gl.getUniformLocation(program, 'uIntensity');
         const uSizeLocation = gl.getUniformLocation(program, 'uSize');
@@ -169,8 +172,14 @@ const Lightning = ({ hue = 230, xOffset = 0, speed = 1, intensity = 1, size = 1 
 
             // Dynamic offset and rotation based on aspect ratio
             const aspectRatio = canvas.width / canvas.height;
-            const dynamicOffset = xOffset + (aspectRatio < 1 ? (1 - aspectRatio) * 1.2 : 0);
-            gl.uniform1f(uXOffsetLocation, dynamicOffset);
+            const isPortrait = aspectRatio < 1;
+
+            // Move lightning more to center in portrait mode
+            const dynamicXOffset = xOffset + (isPortrait ? (1 - aspectRatio) * 2.5 : 0);
+            const dynamicYOffset = isPortrait ? -0.8 : 0; // Move up in portrait
+
+            gl.uniform1f(uXOffsetLocation, dynamicXOffset);
+            gl.uniform1f(uYOffsetLocation, dynamicYOffset);
 
             // More vertical rotation for portrait mode (-45° to -70°)
             const baseRotation = -0.785; // -45 degrees
