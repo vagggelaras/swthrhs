@@ -164,7 +164,12 @@ const Lightning = ({ hue = 230, xOffset = 0, speed = 1, intensity = 1, size = 1 
             const currentTime = performance.now();
             gl.uniform1f(iTimeLocation, (currentTime - startTime) / 1000.0);
             gl.uniform1f(uHueLocation, hue);
-            gl.uniform1f(uXOffsetLocation, xOffset);
+
+            // Dynamic offset based on aspect ratio
+            const aspectRatio = canvas.width / canvas.height;
+            const dynamicOffset = xOffset + (aspectRatio < 1 ? (1 - aspectRatio) * 0.5 : 0);
+            gl.uniform1f(uXOffsetLocation, dynamicOffset);
+
             gl.uniform1f(uSpeedLocation, speed);
             gl.uniform1f(uIntensityLocation, intensity);
             gl.uniform1f(uSizeLocation, size);
