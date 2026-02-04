@@ -37,7 +37,8 @@ const Lightning = ({ hue = 230, xOffset = 0, speed = 1, intensity = 1, size = 1 
       uniform float uSpeed;
       uniform float uIntensity;
       uniform float uSize;
-      
+      uniform float uRotation;
+
       #define OCTAVE_COUNT 10
 
       vec3 hsv2rgb(vec3 c) {
@@ -94,8 +95,8 @@ const Lightning = ({ hue = 230, xOffset = 0, speed = 1, intensity = 1, size = 1 
           uv.x *= iResolution.x / iResolution.y;
           uv.x += uXOffset;
 
-          // Rotate 45 degrees for diagonal (top-right to bottom-left)
-          uv = rotate2d(-0.785) * uv;
+          // Rotate for diagonal (dynamic based on aspect ratio)
+          uv = rotate2d(uRotation) * uv;
 
           uv += 2.0 * fbm(uv * uSize + 0.8 * iTime * uSpeed) - 1.0;
 
@@ -155,6 +156,7 @@ const Lightning = ({ hue = 230, xOffset = 0, speed = 1, intensity = 1, size = 1 
         const uSpeedLocation = gl.getUniformLocation(program, 'uSpeed');
         const uIntensityLocation = gl.getUniformLocation(program, 'uIntensity');
         const uSizeLocation = gl.getUniformLocation(program, 'uSize');
+        const uRotationLocation = gl.getUniformLocation(program, 'uRotation');
 
         const startTime = performance.now();
         const render = () => {
@@ -165,10 +167,17 @@ const Lightning = ({ hue = 230, xOffset = 0, speed = 1, intensity = 1, size = 1 
             gl.uniform1f(iTimeLocation, (currentTime - startTime) / 1000.0);
             gl.uniform1f(uHueLocation, hue);
 
-            // Dynamic offset based on aspect ratio
+            // Dynamic offset and rotation based on aspect ratio
             const aspectRatio = canvas.width / canvas.height;
-            const dynamicOffset = xOffset + (aspectRatio < 1 ? (1 - aspectRatio) * 0.5 : 0);
+            const dynamicOffset = xOffset + (aspectRatio < 1 ? (1 - aspectRatio) * 1.2 : 0);
             gl.uniform1f(uXOffsetLocation, dynamicOffset);
+
+            // More vertical rotation for portrait mode (-45° to -70°)
+            const baseRotation = -0.785; // -45 degrees
+            const dynamicRotation = aspectRatio < 1
+                ? baseRotation - (1 - aspectRatio) * 0.5
+                : baseRotation;
+            gl.uniform1f(uRotationLocation, dynamicRotation);
 
             gl.uniform1f(uSpeedLocation, speed);
             gl.uniform1f(uIntensityLocation, intensity);
