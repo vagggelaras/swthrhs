@@ -29,7 +29,7 @@ const Lightning = ({ hue = 230, xOffset = 0, speed = 1, intensity = 1, size = 1 
     `;
 
         const fragmentShaderSource = `
-      precision mediump float;
+      precision highp float;
       uniform vec2 iResolution;
       uniform float iTime;
       uniform float uHue;
