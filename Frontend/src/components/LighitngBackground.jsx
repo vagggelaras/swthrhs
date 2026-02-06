@@ -170,23 +170,12 @@ const Lightning = ({ hue = 230, xOffset = 0, speed = 1, intensity = 1, size = 1 
             gl.uniform1f(iTimeLocation, (currentTime - startTime) / 1000.0);
             gl.uniform1f(uHueLocation, hue);
 
-            // Dynamic offset and rotation based on aspect ratio
-            const aspectRatio = canvas.width / canvas.height;
-            const isPortrait = aspectRatio < 1;
+            // Keep lightning centered regardless of aspect ratio
+            gl.uniform1f(uXOffsetLocation, xOffset);
+            gl.uniform1f(uYOffsetLocation, 0);
 
-            // Move lightning more to center in portrait mode
-            const dynamicXOffset = xOffset + (isPortrait ? (1 - aspectRatio) * 2.5 : 0);
-            const dynamicYOffset = isPortrait ? -0.8 : 0; // Move up in portrait
-
-            gl.uniform1f(uXOffsetLocation, dynamicXOffset);
-            gl.uniform1f(uYOffsetLocation, dynamicYOffset);
-
-            // More vertical rotation for portrait mode (-45° to -70°)
-            const baseRotation = -0.785; // -45 degrees
-            const dynamicRotation = aspectRatio < 1
-                ? baseRotation - (1 - aspectRatio) * 0.5
-                : baseRotation;
-            gl.uniform1f(uRotationLocation, dynamicRotation);
+            // Fixed -45° diagonal rotation
+            gl.uniform1f(uRotationLocation, -0.785);
 
             gl.uniform1f(uSpeedLocation, speed);
             gl.uniform1f(uIntensityLocation, intensity);
