@@ -5,22 +5,12 @@ import ProviderInfo from './formSteps/ProviderInfo'
 import Lightning from './LighitngBackground'
 import './styles/ContactForm.css'
 
-export default function ContactForm({ lightningOn }) {
+export default function ContactForm({ lightningOn, formData, setFormData }) {
     const [activeService, setActiveService] = useState('electricity')
     const [toggleOpen, setToggleOpen] = useState(false)
     const [basicInfo, setBasicInfo] = useState({})
     const [throwError, setThrowError] = useState()
     const [step, setStep] = useState(1)
-    const [formData, setFormData] = useState({
-        name: '',
-        phone: '',
-        region: '',
-        contact_time: 'anytime',
-        customerType: 'residential',
-        nightTariff: '',
-        socialTariff: '',
-        provider: ''
-    })
 
     const handleToggle = (service, isActive) => {
         if (isActive) {

@@ -6,9 +6,10 @@ nav {
   right: 0;
   z-index: 100;
   padding: 1rem 2rem;
-  background: rgba(10, 22, 40, 0.85);
+  background: var(--bg-nav);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .nav-content {
@@ -24,7 +25,7 @@ nav {
   font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(1.1rem, 3.5vw, 1.5rem);
   font-weight: 700;
-  color: var(--white);
+  color: var(--text-primary);
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -46,8 +47,8 @@ nav {
 
 .nav-cta {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: var(--white);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
   padding: 0.65rem 1.25rem;
   border-radius: 50px;
   font-family: inherit;
@@ -60,8 +61,8 @@ nav {
 }
 
 .nav-cta:hover {
-  background: var(--white);
-  color: var(--midnight);
+  background: var(--text-primary);
+  color: var(--bg-body);
 }
 
 .nav-cta:active {

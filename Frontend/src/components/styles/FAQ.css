@@ -23,7 +23,7 @@
 }
 
 .faq-item {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--border-default);
 }
 
 .faq-question {
@@ -41,7 +41,7 @@
 .faq-question span {
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--white);
+  color: var(--text-primary);
   font-family: inherit;
 }
 
@@ -66,7 +66,7 @@
 
 .faq-answer p {
   padding-bottom: 1.5rem;
-  color: var(--gray-400);
+  color: var(--text-muted);
   font-size: 1rem;
   line-height: 1.7;
 }
