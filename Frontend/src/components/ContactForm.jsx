@@ -5,7 +5,7 @@ import ProviderInfo from './formSteps/ProviderInfo'
 import Lightning from './LighitngBackground'
 import './styles/ContactForm.css'
 
-export default function ContactForm({ lightningOn, formData, setFormData }) {
+export default function ContactForm({ formData, setFormData }) {
     const [activeService, setActiveService] = useState('electricity')
     const [toggleOpen, setToggleOpen] = useState(false)
     const [basicInfo, setBasicInfo] = useState({})
@@ -81,15 +81,7 @@ export default function ContactForm({ lightningOn, formData, setFormData }) {
 
     return (
         <div className="form-card">
-            {lightningOn && (
-                <Lightning
-                    hue={260}
-                    xOffset={0}
-                    speed={.5}
-                    intensity={0.6}
-                    size={2}
-                />
-            )}
+            <Lightning hue={260} xOffset={0} speed={.5} intensity={0.6} size={2} />
             <div className="form-content">
             <div className="form-header">
                 <h2>Λάβε Δωρεάν Προσφορά</h2>
