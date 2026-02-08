@@ -1,7 +1,7 @@
 import ContactForm from './ContactForm'
 import './styles/Hero.css'
 
-function Hero({ lightningOn, formData, setFormData }) {
+function Hero({ formData, setFormData }) {
   return (
       <section className="hero">
         <div className="hero-content">
@@ -34,7 +34,7 @@ function Hero({ lightningOn, formData, setFormData }) {
             </div>
           </div>
 
-          <ContactForm lightningOn={lightningOn} formData={formData} setFormData={setFormData} />
+          <ContactForm formData={formData} setFormData={setFormData} />
         </div >
       </section >
   )
