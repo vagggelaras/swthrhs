@@ -1,14 +1,14 @@
 /* Form Card */
 .form-card {
   /* background: linear-gradient(145deg, rgba(26, 39, 68, 0.8) 0%, rgba(10, 22, 40, 0.9) 100%); */
-  background: linear-gradient(145deg, rgba(26, 39, 68, 0.5) 0%, rgba(10, 22, 40, 0.5) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(145deg, var(--bg-surface-start) 0%, var(--bg-surface-end) 100%);
+  border: 1px solid var(--overlay-medium);
   border-radius: 24px;
   padding: 2rem;
   /* backdrop-filter: blur(4px); */
   box-shadow:
-    0 25px 50px -12px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    0 25px 50px -12px var(--shadow-color),
+    0 0 0 1px var(--overlay-light) inset;
   animation: fadeInUp 0.8s ease-out 0.2s both;
   width: 100%;
   max-width: 480px;
@@ -31,19 +31,19 @@
   font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(1.25rem, 4vw, 1.5rem);
   margin-bottom: 0.25rem;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 10px var(--shadow-color);
 }
 
 .form-header p {
-  color: var(--gray-400);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  color: var(--text-muted);
+  text-shadow: 0 2px 8px var(--shadow-light);
   font-size: clamp(0.85rem, 2.5vw, 0.95rem);
 }
 
 /* Service Toggle */
 .service-toggle {
   display: flex;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-input);
   border-radius: 12px;
   padding: 0.25rem;
   margin-bottom: 1.25rem;
@@ -63,7 +63,7 @@
   padding: 0.75rem 0.5rem;
   border: none;
   background: transparent;
-  color: var(--gray-400);
+  color: var(--text-muted);
   font-family: inherit;
   font-weight: 600;
   font-size: clamp(0.75rem, 2.5vw, 0.9rem);
@@ -83,7 +83,7 @@
 }
 
 .toggle-btn:hover:not(.active) {
-  color: var(--white);
+  color: var(--text-primary);
 }
 
 /* Toggle arrow - hidden on desktop */
@@ -104,24 +104,24 @@
   font-size: clamp(0.8rem, 2.5vw, 0.85rem);
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: var(--gray-200);
+  color: var(--text-secondary);
 }
 
 .form-group input,
 .form-group select {
   width: 100%;
   padding: 0.875rem 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-input);
+  border: 1px solid var(--border-default);
   border-radius: 12px;
-  color: var(--white);
+  color: var(--text-primary);
   font-family: inherit;
   font-size: 1rem;
   transition: all 0.3s ease;
 }
 
 .form-group input::placeholder {
-  color: var(--gray-600);
+  color: var(--text-faint);
 }
 
 .form-group input:focus,
@@ -162,10 +162,10 @@
   font-family: inherit;
   font-size: clamp(0.8rem, 2.5vw, 0.9rem);
   font-weight: 500;
-  color: var(--gray-400);
+  color: var(--text-muted);
   padding: 0.75rem 0.75rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--overlay-faint);
+  border: 1px solid var(--overlay-medium);
   border-radius: 10px;
   transition: all 0.25s ease;
   position: relative;
@@ -185,7 +185,7 @@
 .option-indicator {
   width: 18px;
   height: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.25);
+  border: 2px solid var(--border-medium);
   border-radius: 50%;
   position: relative;
   transition: all 0.25s ease;
@@ -213,9 +213,9 @@
 }
 
 .option-btn:hover:not(.active) {
-  border-color: rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--white);
+  border-color: var(--border-medium);
+  background: var(--hover-surface);
+  color: var(--text-primary);
 }
 
 .option-btn.active {
@@ -275,10 +275,10 @@
 
 .back-btn {
   padding: 1rem 1.25rem;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--overlay-strong);
+  border: 1px solid var(--border-medium);
   border-radius: 12px;
-  color: var(--gray-200);
+  color: var(--text-secondary);
   font-family: inherit;
   font-size: 1rem;
   cursor: pointer;
@@ -287,13 +287,13 @@
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(8px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px var(--shadow-light);
 }
 
 .back-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.25);
-  color: var(--white);
+  background: var(--overlay-strong);
+  border-color: var(--border-medium);
+  color: var(--text-primary);
 }
 
 .back-btn:active {
@@ -316,12 +316,12 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  box-shadow: 0 4px 20px var(--accent-glow), 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 20px var(--accent-glow), 0 2px 8px var(--shadow-light);
 }
 
 .next-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px var(--accent-glow), 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 30px var(--accent-glow), 0 4px 12px var(--shadow-light);
 }
 
 .next-btn:active {
@@ -357,7 +357,7 @@
   text-align: center;
   margin-top: 1rem;
   font-size: 0.8rem;
-  color: var(--gray-600);
+  color: var(--text-faint);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -366,6 +366,62 @@
 
 .form-footer svg {
   flex-shrink: 0;
+}
+
+/* kWh Slider */
+.kwh-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-default);
+  outline: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.kwh-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+  cursor: pointer;
+  box-shadow: 0 2px 8px var(--accent-glow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kwh-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 4px 14px var(--accent-glow);
+}
+
+.kwh-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 8px var(--accent-glow);
+}
+
+.kwh-slider::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-default);
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.35rem;
+  font-size: 0.7rem;
+  color: var(--text-faint);
 }
 
 /* ========== RESPONSIVE ========== */
@@ -460,7 +516,7 @@
     opacity: 0;
     overflow: hidden;
     transition: all 0.25s ease;
-    background: rgba(26, 39, 68, 0.95);
+    background: var(--toggle-mobile-bg);
     border-radius: 0;
   }
 
@@ -475,16 +531,16 @@
   }
 
   .service-toggle.open {
-    background: rgba(26, 39, 68, 0.98);
+    background: var(--toggle-mobile-open-bg);
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-default);
   }
 
   .service-toggle.open .toggle-btn {
     max-height: 60px;
     padding: 0.85rem 1rem;
     opacity: 1;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--overlay-medium);
   }
 
   .service-toggle.open .toggle-btn:last-child {
@@ -497,11 +553,11 @@
     border-radius: 0;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--overlay-medium);
   }
 
   .service-toggle.open .toggle-btn:not(.active):hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--overlay-medium);
   }
 
   .toggle-arrow {

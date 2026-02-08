@@ -3,7 +3,7 @@ footer {
   position: relative;
   z-index: 1;
   padding: 3rem 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid var(--border-subtle);
 }
 
 .footer-content {
@@ -22,18 +22,18 @@ footer {
 }
 
 .footer-links a {
-  color: var(--gray-400);
+  color: var(--text-muted);
   text-decoration: none;
   font-size: 0.9rem;
   transition: color 0.3s ease;
 }
 
 .footer-links a:hover {
-  color: var(--white);
+  color: var(--text-primary);
 }
 
 .footer-copy {
-  color: var(--gray-600);
+  color: var(--text-faint);
   font-size: 0.85rem;
 }
 
