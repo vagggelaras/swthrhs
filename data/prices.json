@@ -1,0 +1,668 @@
+{
+  "scraped_at": "2026-02-09T20:52:02Z",
+  "source": "energycost.gr",
+  "total_plans": 98,
+  "total_providers": 12,
+  "providers": [
+    {
+      "name": "ENERWAVE",
+      "plan_count": 6,
+      "plans": [
+        {
+          "plan": "Reward Night Saver",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.0659,
+          "monthly_fee_eur": 7.9
+        },
+        {
+          "plan": "Bright Home",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.1299,
+          "monthly_fee_eur": 12.9
+        },
+        {
+          "plan": "Reward Saver",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.1409,
+          "monthly_fee_eur": 7.9
+        },
+        {
+          "plan": "Ειδικό",
+          "tariff_type": "Ειδικό Τιμολόγιο",
+          "price_per_kwh": 0.24169,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "SMART",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "Smart Zero",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 0.0
+        }
+      ]
+    },
+    {
+      "name": "EUNICE",
+      "plan_count": 5,
+      "plans": [
+        {
+          "plan": "EUNICE Home Fair II",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.16,
+          "monthly_fee_eur": 4.0
+        },
+        {
+          "plan": "Ειδικό",
+          "tariff_type": "Ειδικό Τιμολόγιο",
+          "price_per_kwh": 0.17178,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "EUNICE Basic Home II",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.0,
+          "monthly_fee_eur": 2.0
+        },
+        {
+          "plan": "EUNICE HOME FLOW X promo",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.0,
+          "monthly_fee_eur": 3.3
+        },
+        {
+          "plan": "EUNICE HOME FLOW X",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.0,
+          "monthly_fee_eur": 0.0
+        }
+      ]
+    },
+    {
+      "name": "NRG",
+      "plan_count": 10,
+      "plans": [
+        {
+          "plan": "nrg fixed on time 18M",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.114,
+          "monthly_fee_eur": 9.9
+        },
+        {
+          "plan": "nrg fixed on time advanced 2.0",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.119,
+          "monthly_fee_eur": 9.9
+        },
+        {
+          "plan": "nrg 50",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.15909,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "nrg 100",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.18182,
+          "monthly_fee_eur": 0.0
+        },
+        {
+          "plan": "nrg simple 3.0",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.197,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "Ειδικό",
+          "tariff_type": "Ειδικό Τιμολόγιο",
+          "price_per_kwh": 0.209,
+          "monthly_fee_eur": 3.5
+        },
+        {
+          "plan": "nrg prime 4U",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 1.8
+        },
+        {
+          "plan": "nrg on time 4U",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 3.5
+        },
+        {
+          "plan": "nrg @ cost+",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "nrg hybrid 50-50",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 6.0
+        }
+      ]
+    },
+    {
+      "name": "OTE ESTATE",
+      "plan_count": 1,
+      "plans": [
+        {
+          "plan": "Ειδικό",
+          "tariff_type": "Ειδικό Τιμολόγιο",
+          "price_per_kwh": 0.1584,
+          "monthly_fee_eur": 5.0
+        }
+      ]
+    },
+    {
+      "name": "PROTERGIA",
+      "plan_count": 8,
+      "plans": [
+        {
+          "plan": "Value 4FAMILY",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.089,
+          "monthly_fee_eur": 9.9
+        },
+        {
+          "plan": "Value Pulse",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.119,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "Value Sure",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.124,
+          "monthly_fee_eur": 6.9
+        },
+        {
+          "plan": "Value Safe More",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.125,
+          "monthly_fee_eur": 9.9
+        },
+        {
+          "plan": "Value Standard",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.139,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "Value Special",
+          "tariff_type": "Ειδικό Τιμολόγιο",
+          "price_per_kwh": 0.159,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "Value Lite",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.17323,
+          "monthly_fee_eur": 0.0
+        },
+        {
+          "plan": "Helios Value",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.17667,
+          "monthly_fee_eur": 0.0
+        }
+      ]
+    },
+    {
+      "name": "SOLAR ENERGY",
+      "plan_count": 5,
+      "plans": [
+        {
+          "plan": "Ειδικό",
+          "tariff_type": "Ειδικό Τιμολόγιο",
+          "price_per_kwh": 0.16907,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "Οικιακό FIXED",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.36,
+          "monthly_fee_eur": 10.0
+        },
+        {
+          "plan": "Οικιακό S1",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 0.0
+        },
+        {
+          "plan": "Οικιακό S1+",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 4.5
+        },
+        {
+          "plan": "Οικιακό S1Ν",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 0.0
+        }
+      ]
+    },
+    {
+      "name": "VOLTON",
+      "plan_count": 13,
+      "plans": [
+        {
+          "plan": "Volton Blue Flat",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.099,
+          "monthly_fee_eur": 9.9
+        },
+        {
+          "plan": "Volton Blue Fixed Plus v2",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.115,
+          "monthly_fee_eur": 11.9
+        },
+        {
+          "plan": "Volton Yellow Flat v3",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.119,
+          "monthly_fee_eur": 9.9
+        },
+        {
+          "plan": "Ειδικό",
+          "tariff_type": "Ειδικό Τιμολόγιο",
+          "price_per_kwh": 0.21784,
+          "monthly_fee_eur": 4.9
+        },
+        {
+          "plan": "VOLTON YELLOW SIMPLE 50 €",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 4.9
+        },
+        {
+          "plan": "Volton Stay & Win",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 6.9
+        },
+        {
+          "plan": "Volton Smart 150",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 26.5
+        },
+        {
+          "plan": "Volton Yellow Zero",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 0.0
+        },
+        {
+          "plan": "Volton Smart 250",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 42.0
+        },
+        {
+          "plan": "Volton Smart 350",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 57.0
+        },
+        {
+          "plan": "Volton Smart 450",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 72.0
+        },
+        {
+          "plan": "Volton Smart 550",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 88.0
+        },
+        {
+          "plan": "Volton Yellow Standard",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 9.9
+        }
+      ]
+    },
+    {
+      "name": "ΔΕΗ",
+      "plan_count": 8,
+      "plans": [
+        {
+          "plan": "myHomeEnterTwo",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.095,
+          "monthly_fee_eur": 8.0
+        },
+        {
+          "plan": "My Home Enter",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.1121,
+          "monthly_fee_eur": 4.9
+        },
+        {
+          "plan": "MyHome 4All",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.11366,
+          "monthly_fee_eur": 4.9
+        },
+        {
+          "plan": "Ειδικό",
+          "tariff_type": "Ειδικό Τιμολόγιο",
+          "price_per_kwh": 0.12422,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "myHome4Student",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.12513,
+          "monthly_fee_eur": 2.91
+        },
+        {
+          "plan": "My Home Online",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.132,
+          "monthly_fee_eur": 3.5
+        },
+        {
+          "plan": "myHomePlan",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.145,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "myHome4All OneRate",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.0,
+          "monthly_fee_eur": 6.86
+        }
+      ]
+    },
+    {
+      "name": "ΕΛΙΝΟΙΛ",
+      "plan_count": 11,
+      "plans": [
+        {
+          "plan": "Power On! Hybrid 100",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.0699,
+          "monthly_fee_eur": 7.9
+        },
+        {
+          "plan": "Power On! Blue Now 24Μ+",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.0899,
+          "monthly_fee_eur": 9.9
+        },
+        {
+          "plan": "Power On! Blue Now 18Μ+ Οικιακό",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.0919,
+          "monthly_fee_eur": 9.9
+        },
+        {
+          "plan": "Power On! Blue Now 12Μ+ Οικιακό",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.0939,
+          "monthly_fee_eur": 9.9
+        },
+        {
+          "plan": "Power On! Hybrid 150",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.0969,
+          "monthly_fee_eur": 7.9
+        },
+        {
+          "plan": "Power On! Hybrid 200",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.1089,
+          "monthly_fee_eur": 7.9
+        },
+        {
+          "plan": "Power On! Blue Now 24Μ",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.1099,
+          "monthly_fee_eur": 4.9
+        },
+        {
+          "plan": "Power On! Blue Now 18Μ Οικιακό",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.1119,
+          "monthly_fee_eur": 4.9
+        },
+        {
+          "plan": "Power On! Blue Now 12Μ Οικιακό",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.1139,
+          "monthly_fee_eur": 4.9
+        },
+        {
+          "plan": "Ειδικό",
+          "tariff_type": "Ειδικό Τιμολόγιο",
+          "price_per_kwh": 0.16491,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "Power On! Home Zero",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 0.0
+        }
+      ]
+    },
+    {
+      "name": "ΖΕΝΙΘ",
+      "plan_count": 12,
+      "plans": [
+        {
+          "plan": "Power Home Secure Night 2.0",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.089,
+          "monthly_fee_eur": 9.9
+        },
+        {
+          "plan": "Power Home Student",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.095,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "Power Home Control",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.09804,
+          "monthly_fee_eur": 9.9
+        },
+        {
+          "plan": "Power Home Comfort",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.099,
+          "monthly_fee_eur": 9.0
+        },
+        {
+          "plan": "Ειδικό",
+          "tariff_type": "Ειδικό Τιμολόγιο",
+          "price_per_kwh": 0.2525,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "My Pet My Home",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 4.5
+        },
+        {
+          "plan": "My Pet My Home",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 4.5
+        },
+        {
+          "plan": "My Pet My Home",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 4.5
+        },
+        {
+          "plan": "Power Home More",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "Power Home Go Electric Plus",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 4.0
+        },
+        {
+          "plan": "Power Home Select",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "Power Home Save 2.0",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 5.0
+        }
+      ]
+    },
+    {
+      "name": "ΗΡΩΝ",
+      "plan_count": 13,
+      "plans": [
+        {
+          "plan": "BLUE GENEROUS HOME 6",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.10945,
+          "monthly_fee_eur": 9.9
+        },
+        {
+          "plan": "BLUE GENEROUS MAX HOME 3",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.1152,
+          "monthly_fee_eur": 9.9
+        },
+        {
+          "plan": "BASIC HOME",
+          "tariff_type": "Ειδικό Τιμολόγιο",
+          "price_per_kwh": 0.1476,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "Yellow One Home 2",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.1532,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "DOUBLE GENEROUS HOME",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 5.5
+        },
+        {
+          "plan": "ECO GENEROUS HOME",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 6.5
+        },
+        {
+          "plan": "SOLAR GENEROUS HOME",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 5.5
+        },
+        {
+          "plan": "Yellow Free HOME",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 0.0
+        },
+        {
+          "plan": "Yellow Free Student",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 0.0
+        },
+        {
+          "plan": "PROTECT 4 HOME",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 5.5
+        },
+        {
+          "plan": "YELLOW BENEFIT HOME",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 5.5
+        },
+        {
+          "plan": "YELLOW PLUS HOME",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": null
+        },
+        {
+          "plan": "HAPPY HOUR FOR ALL HOME",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 0.0
+        }
+      ]
+    },
+    {
+      "name": "ΦΥΣΙΚΟ ΑΕΡΙΟ ΕΛΛΗΝΙΚΗ ΕΤΑΙΡΙΑ ΕΝΕΡΓΕΙΑΣ",
+      "plan_count": 6,
+      "plans": [
+        {
+          "plan": "Ρεύμα MAXI Home 150",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": 0.099,
+          "monthly_fee_eur": 8.9
+        },
+        {
+          "plan": "Home Fixed",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.139,
+          "monthly_fee_eur": 9.9
+        },
+        {
+          "plan": "MAXI Home Energy Save",
+          "tariff_type": "Σταθερό Τιμολόγιο",
+          "price_per_kwh": 0.174,
+          "monthly_fee_eur": 10.9
+        },
+        {
+          "plan": "Ειδικό",
+          "tariff_type": "Ειδικό Τιμολόγιο",
+          "price_per_kwh": 0.209,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "MAXI Home",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 5.0
+        },
+        {
+          "plan": "Ρεύµα MAXI Home 10",
+          "tariff_type": "Κυμαινόμενο Τιμολόγιο",
+          "price_per_kwh": null,
+          "monthly_fee_eur": 5.0
+        }
+      ]
+    }
+  ]
+}
