@@ -1,5 +1,6 @@
 node_modules
 dist
+AdminDashboard/
 dist-ssr
 *.local
 .env
