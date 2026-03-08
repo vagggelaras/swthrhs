@@ -29,28 +29,37 @@ function App() {
     nightTariff: '',
     socialTariff: '',
     provider: '',
-    kwhConsumption: 0,
+    kwhConsumption: 140,
     nightKwhConsumption: 0
   })
 
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [pricesData, setPricesData] = useState([])
+  const [settingsVars, setSettingsVars] = useState({})
   const [selectedPlan, setSelectedPlan] = useState(null)
   const [detailSidebarOpen, setDetailSidebarOpen] = useState(false)
+  const [submissionId, setSubmissionId] = useState(null)
 
   useEffect(() => {
     async function loadPrices() {
-      const { data, error } = await supabase
-        .from('plans')
-        .select('*, providers(name)')
+      const [plansRes, settingsRes] = await Promise.all([
+        supabase.from('plans').select('*, providers(name, adjustment_factor)'),
+        supabase.from('settings').select('key, value')
+      ])
 
-      if (error) {
-        console.error('Failed to load prices:', error)
+      if (plansRes.error) {
+        console.error('Failed to load prices:', plansRes.error)
         return
       }
 
-      const flat = data.map(plan => ({
+      const vars = {}
+      if (settingsRes.data) {
+        settingsRes.data.forEach(s => { vars[s.key] = Number(s.value) })
+      }
+      setSettingsVars(vars)
+
+      const flat = plansRes.data.map(plan => ({
         provider: plan.providers.name,
         adjustment_factor: plan.providers.adjustment_factor,
         plan: plan.plan_name,
@@ -58,7 +67,13 @@ function App() {
         price_per_kwh: plan.price_per_kwh,
         night_price_per_kwh: plan.night_price_per_kwh,
         monthly_fee_eur: plan.monthly_fee_eur,
-        social_tariff: plan.social_tariff
+        social_tariff: plan.social_tariff,
+        price_formula: plan.price_formula,
+        night_price_formula: plan.night_price_formula,
+        tv: plan.tv,
+        ll: plan.ll,
+        lu: plan.lu,
+        alpha: plan.alpha,
       }))
       setPricesData(flat)
     }
@@ -125,6 +140,42 @@ function App() {
     return () => { document.body.style.overflow = '' }
   }, [sidebarOpen, detailSidebarOpen])
 
+  const handleFormSubmit = async () => {
+    setFormSubmitted(true)
+    setSidebarOpen(true)
+
+    const payload = {
+      lead_info: {
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email || null,
+        region: formData.region,
+        contact_time: formData.contact_time,
+      },
+      electricity_info: {
+        customer_type: formData.customerType,
+        night_tariff: formData.nightTariff,
+        social_tariff: formData.socialTariff,
+        current_provider: formData.provider,
+        kwh_consumption: formData.kwhConsumption,
+        night_kwh_consumption: formData.nightKwhConsumption,
+      },
+      submitted_at: new Date().toISOString(),
+    }
+
+    const { data, error } = await supabase
+      .from('submissions')
+      .insert([payload])
+      .select('id')
+      .single()
+
+    if (!error && data) {
+      setSubmissionId(data.id)
+    } else {
+      console.error('Failed to create submission:', error)
+    }
+  }
+
   const handlePlanSelect = (plan) => {
     setSelectedPlan(plan)
     setDetailSidebarOpen(true)
@@ -140,7 +191,7 @@ function App() {
       <div className="grid-overlay"></div>
 
       <Nav onCtaClick={handleCtaClick} sidebarOpen={sidebarOpen} onSidebarToggle={handleSidebarToggle} />
-      <Hero formData={formData} setFormData={setFormData} onFormSubmit={() => { setFormSubmitted(true); setSidebarOpen(true) }} />
+      <Hero formData={formData} setFormData={setFormData} onFormSubmit={handleFormSubmit} />
       <Features />
       <HowItWorks />
       <Testimonials />
@@ -151,6 +202,7 @@ function App() {
         formData={formData}
         setFormData={setFormData}
         pricesData={pricesData}
+        settingsVars={settingsVars}
         isOpen={sidebarOpen}
         onToggle={handleSidebarToggle}
         formSubmitted={formSubmitted}
@@ -161,6 +213,8 @@ function App() {
         isOpen={detailSidebarOpen}
         onClose={() => setDetailSidebarOpen(false)}
         selectedPlan={selectedPlan}
+        formData={formData}
+        submissionId={submissionId}
       />
       <ThemeToggle darkMode={darkMode} onToggle={() => setDarkMode(prev => !prev)} />
     </>

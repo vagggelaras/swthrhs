@@ -1,4 +1,5 @@
-import { useMemo, useState, useRef, useCallback } from 'react'
+import { useMemo, useState, useRef, useCallback, useEffect } from 'react'
+import { resolvePlanPrice, resolvePlanNightPrice } from '../lib/formula'
 import './styles/PriceSidebar.css'
 
 // Non-linear slider: 0-500 kWh takes the first half, 500-5000 scales quadratically
@@ -34,12 +35,32 @@ const TARIFF_COLOR_MAP = Object.fromEntries(
   TARIFF_FILTERS.map(f => [f.key, { label: f.label, color: f.color }])
 )
 
-export default function PriceSidebar({ formData, setFormData, pricesData, isOpen, onToggle, formSubmitted, onGoToForm, onPlanSelect }) {
+export default function PriceSidebar({ formData, setFormData, pricesData, settingsVars = {}, isOpen, onToggle, formSubmitted, onGoToForm, onPlanSelect }) {
   const [localKwh, setLocalKwh] = useState(null)
+  const [localNightKwh, setLocalNightKwh] = useState(null)
   const isDragging = useRef(false)
+  const isNightDragging = useRef(false)
+  const [showDaySlider, setShowDaySlider] = useState(false)
+  const [showNightSlider, setShowNightSlider] = useState(false)
+  const dayControlRef = useRef(null)
+  const nightControlRef = useRef(null)
+
+  useEffect(() => {
+    if (!showDaySlider && !showNightSlider) return
+    const handleClickOutside = (e) => {
+      if (showDaySlider && dayControlRef.current && !dayControlRef.current.contains(e.target)) {
+        setShowDaySlider(false)
+      }
+      if (showNightSlider && nightControlRef.current && !nightControlRef.current.contains(e.target)) {
+        setShowNightSlider(false)
+      }
+    }
+    document.addEventListener('pointerdown', handleClickOutside)
+    return () => document.removeEventListener('pointerdown', handleClickOutside)
+  }, [showDaySlider, showNightSlider])
 
   const kWh = localKwh !== null ? localKwh : formData.kwhConsumption
-  const nightKwh = formData.nightKwhConsumption
+  const nightKwh = localNightKwh !== null ? localNightKwh : formData.nightKwhConsumption
   const [activeFilters, setActiveFilters] = useState(new Set())
   const [expandedCard, setExpandedCard] = useState(null)
   const [activeTab, setActiveTab] = useState('charges')
@@ -58,6 +79,20 @@ export default function PriceSidebar({ formData, setFormData, pricesData, isOpen
     }
   }, [localKwh, setFormData])
 
+  const handleNightSliderChange = useCallback((e) => {
+    const val = sliderToKwh(Number(e.target.value))
+    isNightDragging.current = true
+    setLocalNightKwh(val)
+  }, [])
+
+  const handleNightSliderEnd = useCallback(() => {
+    if (isNightDragging.current && localNightKwh !== null) {
+      setFormData(prev => ({ ...prev, nightKwhConsumption: localNightKwh }))
+      setLocalNightKwh(null)
+      isNightDragging.current = false
+    }
+  }, [localNightKwh, setFormData])
+
 
   const toggleFilter = (key) => {
     setActiveFilters(prev => {
@@ -72,19 +107,31 @@ export default function PriceSidebar({ formData, setFormData, pricesData, isOpen
     if (!pricesData.length || kWh === 0) return []
 
     return pricesData
-      .filter(plan => plan.price_per_kwh !== null && plan.price_per_kwh > 0)
       .filter(plan => activeFilters.size === 0 || activeFilters.has(plan.tariff_type))
       .map(plan => {
-        const nightRate = plan.night_price_per_kwh ?? plan.price_per_kwh
-        const dayCost = plan.price_per_kwh * (kWh - nightKwh)
+        // Merge provider adjustment_factor into variables
+        const vars = { ...settingsVars }
+        if (plan.adjustment_factor != null) vars.adjustment_factor = Number(plan.adjustment_factor)
+
+        const resolvedPrice = resolvePlanPrice(plan, vars)
+        const resolvedNightPrice = resolvePlanNightPrice(plan, vars)
+
+        if (resolvedPrice == null || resolvedPrice <= 0) return null
+
+        const nightRate = resolvedNightPrice ?? resolvedPrice
+        const dayCost = resolvedPrice * kWh
         const nightCost = nightRate * nightKwh
+
         return {
           ...plan,
+          resolved_price: resolvedPrice,
+          resolved_night_price: resolvedNightPrice,
           monthlyCost: dayCost + nightCost + (plan.monthly_fee_eur ?? 0)
         }
       })
+      .filter(Boolean)
       .sort((a, b) => a.monthlyCost - b.monthlyCost)
-  }, [pricesData, kWh, nightKwh, activeFilters])
+  }, [pricesData, settingsVars, kWh, nightKwh, activeFilters])
 
   return (
     <>
@@ -104,7 +151,7 @@ export default function PriceSidebar({ formData, setFormData, pricesData, isOpen
           {formSubmitted && (
             <>
               <div className="sidebar-controls-row">
-                <div className="sidebar-controls-left">
+                <div className="sidebar-controls-left" ref={dayControlRef}>
                   <label className="sidebar-slider-label">Ημερήσια κατανάλωση:</label>
                   <div className="sidebar-kwh-input-row">
                     <input
@@ -112,6 +159,7 @@ export default function PriceSidebar({ formData, setFormData, pricesData, isOpen
                       min="0"
                       max="5000"
                       value={kWh}
+                      onFocus={() => setShowDaySlider(true)}
                       onChange={(e) => {
                         const val = Math.max(0, Math.min(5000, Number(e.target.value) || 0))
                         setFormData(prev => ({ ...prev, kwhConsumption: val }))
@@ -120,8 +168,26 @@ export default function PriceSidebar({ formData, setFormData, pricesData, isOpen
                     />
                     <span className="sidebar-kwh-unit">kWh</span>
                   </div>
+                  <div className={`kwh-slider-wrapper ${showDaySlider ? 'visible' : ''}`}>
+                    <input
+                      type="range"
+                      min="0"
+                      max={SLIDER_MAX}
+                      step="1"
+                      value={kwhToSlider(kWh)}
+                      onChange={handleSliderChange}
+                      onMouseUp={handleSliderEnd}
+                      onTouchEnd={handleSliderEnd}
+                      className="kwh-slider"
+                    />
+                    <div className="slider-labels">
+                      <span>0</span>
+                      <span>500</span>
+                      <span>5000 kWh</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="sidebar-controls-left">
+                <div className="sidebar-controls-left" ref={nightControlRef}>
                   <label className="sidebar-slider-label">Νυχτερινή κατανάλωση:</label>
                   <div className="sidebar-kwh-input-row">
                     <input
@@ -129,6 +195,7 @@ export default function PriceSidebar({ formData, setFormData, pricesData, isOpen
                       min="0"
                       max="5000"
                       value={nightKwh}
+                      onFocus={() => setShowNightSlider(true)}
                       onChange={(e) => {
                         const val = Math.max(0, Math.min(5000, Number(e.target.value) || 0))
                         setFormData(prev => ({ ...prev, nightKwhConsumption: val }))
@@ -137,23 +204,25 @@ export default function PriceSidebar({ formData, setFormData, pricesData, isOpen
                     />
                     <span className="sidebar-kwh-unit">kWh</span>
                   </div>
+                  <div className={`kwh-slider-wrapper ${showNightSlider ? 'visible' : ''}`}>
+                    <input
+                      type="range"
+                      min="0"
+                      max={SLIDER_MAX}
+                      step="1"
+                      value={kwhToSlider(nightKwh)}
+                      onChange={handleNightSliderChange}
+                      onMouseUp={handleNightSliderEnd}
+                      onTouchEnd={handleNightSliderEnd}
+                      className="kwh-slider"
+                    />
+                    <div className="slider-labels">
+                      <span>0</span>
+                      <span>500</span>
+                      <span>5000 kWh</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <input
-                type="range"
-                min="0"
-                max={SLIDER_MAX}
-                step="1"
-                value={kwhToSlider(kWh)}
-                onChange={handleSliderChange}
-                onMouseUp={handleSliderEnd}
-                onTouchEnd={handleSliderEnd}
-                className="kwh-slider"
-              />
-              <div className="slider-labels">
-                <span>0</span>
-                <span>500</span>
-                <span>5000 kWh</span>
               </div>
               <div className="tariff-filters">
                 <span className="tariff-filters-label">Φίλτρα:</span>
@@ -163,6 +232,7 @@ export default function PriceSidebar({ formData, setFormData, pricesData, isOpen
                     className={`tariff-filter-btn tariff-${f.color} ${activeFilters.has(f.key) ? 'active' : ''}`}
                     onClick={() => toggleFilter(f.key)}
                   >
+                    {activeFilters.has(f.key) && <span className="tariff-filter-check">✓</span>}
                     {f.label}
                   </button>
                 ))}
@@ -228,7 +298,7 @@ export default function PriceSidebar({ formData, setFormData, pricesData, isOpen
                         </div>
                         <div className="plan-card-bottom">
                           <div className="plan-details">
-                            <span>{plan.price_per_kwh.toFixed(4)} €/kWh</span>
+                            <span>{plan.resolved_price.toFixed(4)} €/kWh</span>
                             <span className="plan-detail-sep">·</span>
                             <span>Πάγιο: {(plan.monthly_fee_eur ?? 0).toFixed(2)}€</span>
                           </div>
@@ -264,12 +334,12 @@ export default function PriceSidebar({ formData, setFormData, pricesData, isOpen
                             <ul className="plan-charges-list">
                               <li>
                                 <span className="charge-label">Ημερήσια χρέωση</span>
-                                <span className="charge-value">{plan.price_per_kwh.toFixed(4)} €/kWh</span>
+                                <span className="charge-value">{plan.resolved_price.toFixed(4)} €/kWh</span>
                               </li>
-                              {plan.night_price_per_kwh != null && (
+                              {plan.resolved_night_price != null && (
                                 <li>
                                   <span className="charge-label">Νυχτερινή χρέωση</span>
-                                  <span className="charge-value">{plan.night_price_per_kwh.toFixed(4)} €/kWh</span>
+                                  <span className="charge-value">{plan.resolved_night_price.toFixed(4)} €/kWh</span>
                                 </li>
                               )}
                               <li>

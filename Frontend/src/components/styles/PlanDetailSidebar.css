@@ -386,7 +386,15 @@
 
 .detail-upload-row {
   display: flex;
+  align-items: flex-start;
   gap: 0.5rem;
+}
+
+.detail-upload-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
 .detail-upload-row .detail-upload-field {
@@ -533,6 +541,44 @@
   margin-bottom: 0.75rem;
 }
 
+/* Submit section */
+.detail-submit-section {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.detail-submit-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.detail-submit-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  color: #22c55e;
+}
+
+.detail-submit-success p {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.detail-submit-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  color: #ef4444;
+}
+
+.detail-submit-error p {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
 /* Actions row */
 .detail-section-actions {
   display: flex;
@@ -654,6 +700,60 @@
 .detail-sidebar-content {
   scrollbar-width: thin;
   scrollbar-color: var(--accent) transparent;
+}
+
+/* File preview list */
+.file-preview-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.file-preview {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  background: var(--overlay-faint);
+  border: 1px solid var(--overlay-medium);
+  border-radius: 8px;
+}
+
+.file-preview-thumb {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.file-preview-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-preview-remove {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.file-preview-remove:hover {
+  background: rgba(239, 68, 68, 0.3);
 }
 
 /* ========== RESPONSIVE ========== */

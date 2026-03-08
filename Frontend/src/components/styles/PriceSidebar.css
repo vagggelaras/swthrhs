@@ -80,7 +80,8 @@
 }
 
 .sidebar-controls-left {
-  flex-shrink: 0;
+  flex: 1;
+  min-width: 0;
 }
 
 .sidebar-slider-label {
@@ -89,6 +90,7 @@
   color: var(--text-secondary);
   font-weight: 600;
   margin: 0 0 0.4rem;
+  white-space: nowrap;
 }
 
 .sidebar-kwh-input-row {
@@ -149,6 +151,9 @@
 }
 
 .tariff-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
   padding: 0.3rem 0.65rem;
   border-radius: 16px;
   border: 1.5px solid;
@@ -158,6 +163,11 @@
   cursor: pointer;
   background: transparent;
   transition: all 0.2s ease;
+}
+
+.tariff-filter-check {
+  font-size: 0.7rem;
+  font-weight: 700;
 }
 
 .tariff-filter-btn:hover {
@@ -212,38 +222,45 @@
   box-shadow: 0 0 12px rgba(249, 115, 22, 0.5);
 }
 
-/* Slider – constrain width on desktop */
-.sidebar-header .kwh-slider {
-  max-width: 280px;
-  margin: 0 auto;
+/* Slider wrapper – hidden by default, revealed on input focus */
+.kwh-slider-wrapper {
+  display: none;
+}
+
+.kwh-slider-wrapper.visible {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.kwh-slider-wrapper .kwh-slider {
+  width: 100%;
   display: block;
 }
 
-/* Slider labels – position absolutely so 500 aligns with the 50% thumb */
-.sidebar-header .slider-labels {
+/* Slider labels */
+.kwh-slider-wrapper .slider-labels {
   position: relative;
   height: 1.2em;
-  max-width: 280px;
-  margin: 0.4rem auto 0;
+  margin: 0.3rem 0 0;
 }
 
-.sidebar-header .slider-labels span {
+.kwh-slider-wrapper .slider-labels span {
   position: absolute;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 600;
   color: var(--text-secondary);
 }
 
-.sidebar-header .slider-labels span:first-child {
+.kwh-slider-wrapper .slider-labels span:first-child {
   left: 0;
 }
 
-.sidebar-header .slider-labels span:nth-child(2) {
+.kwh-slider-wrapper .slider-labels span:nth-child(2) {
   left: 50%;
   transform: translateX(-50%);
 }
 
-.sidebar-header .slider-labels span:last-child {
+.kwh-slider-wrapper .slider-labels span:last-child {
   right: 0;
 }
 
