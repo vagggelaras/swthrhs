@@ -14,12 +14,33 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  grid-template-rows: auto auto;
+  column-gap: 3rem;
+  row-gap: 0;
   align-items: center;
 }
 
-.hero-text {
+.hero-text-top {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: end;
   animation: fadeInUp 0.8s ease-out;
+  text-align: center;
+}
+
+.hero-text-bottom {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: start;
+  animation: fadeInUp 0.8s ease-out;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.hero-content > .form-card {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  align-self: center;
 }
 
 @keyframes fadeInUp {
@@ -77,6 +98,7 @@
 .trust-badges {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1.5rem;
   flex-wrap: wrap;
 }
@@ -103,7 +125,7 @@
   }
 
   .hero-content {
-    gap: 2rem;
+    column-gap: 2rem;
   }
 }
 
@@ -116,12 +138,28 @@
 
   .hero-content {
     grid-template-columns: 1fr;
+    grid-template-rows: auto;
     text-align: center;
-    gap: 2.5rem;
+    row-gap: 2.5rem;
+    column-gap: 0;
   }
 
-  .hero-text {
+  .hero-text-top {
+    grid-column: 1;
+    grid-row: auto;
     order: 1;
+  }
+
+  .hero-content > .form-card {
+    grid-column: 1;
+    grid-row: auto;
+    order: 2;
+  }
+
+  .hero-text-bottom {
+    grid-column: 1;
+    grid-row: auto;
+    order: 3;
   }
 
   .hero-description {
@@ -146,7 +184,7 @@
   }
 
   .hero-content {
-    gap: 2rem;
+    row-gap: 2rem;
   }
 
   .badge {

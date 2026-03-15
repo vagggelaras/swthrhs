@@ -3,9 +3,10 @@ import SpecificInfo from './formSteps/SpecificInfo'
 import BasicInfo from './formSteps/BasicInfo'
 import ProviderInfo from './formSteps/ProviderInfo'
 import Lightning from './LighitngBackground'
+import LiquidEther from './LiquidEther';
 import './styles/ContactForm.css'
 
-export default function ContactForm({ formData, setFormData, onFormSubmit }) {
+export default function ContactForm({ formData, setFormData, onFormSubmit, providersData }) {
     const [activeService, setActiveService] = useState('electricity')
     const [toggleOpen, setToggleOpen] = useState(false)
     const [basicInfo, setBasicInfo] = useState({})
@@ -43,40 +44,32 @@ export default function ContactForm({ formData, setFormData, onFormSubmit }) {
 
     const handleNext = () => {
         setThrowError(null)
-        if (step === 1 ){
-
-            if ((activeService === 'electricity' || activeService === 'both')){
-                if(!formData.nightTariff){
-                    setThrowError('Παρακαλώ επιλέξτε εάν έχετε νυχτερινό τιμολόγιο ή όχι.')
-                    return
-                }
-
-                if(!formData.socialTariff){
-                    setThrowError('Παρακαλώ επιλέξτε εάν λαμβάνετε κοινωνικό τιμολόγιο ή όχι.')
-                    return
-                }
-
-                setBasicInfo({
-                    service: activeService,
-                    customerType: formData.customerType,
-                    nightTariff: formData.nightTariff,
-                    socialTariff: formData.socialTariff
-                })
-                
-                setStep(2)
+        if (step === 1) {
+            if (!formData.nightTariff) {
+                setThrowError('Παρακαλώ επιλέξτε εάν έχετε νυχτερινό τιμολόγιο ή όχι.')
+                return
             }
 
-        } else if (step === 2){
-            if ((activeService === 'electricity' || activeService === 'both')) {
-            
-                if (!formData.provider) {
-                    setThrowError('Παρακαλώ επιλέξτε πάροχο.')
-                    return
-                }
-
-                setStep(3)
-
+            if (!formData.socialTariff) {
+                setThrowError('Παρακαλώ επιλέξτε εάν λαμβάνετε κοινωνικό τιμολόγιο ή όχι.')
+                return
             }
+
+            setBasicInfo({
+                service: activeService,
+                customerType: formData.customerType,
+                nightTariff: formData.nightTariff,
+                socialTariff: formData.socialTariff
+            })
+
+            setStep(2)
+        } else if (step === 2) {
+            if (!formData.provider) {
+                setThrowError('Παρακαλώ επιλέξτε πάροχο.')
+                return
+            }
+
+            setStep(3)
         }
     }
 
@@ -84,6 +77,28 @@ export default function ContactForm({ formData, setFormData, onFormSubmit }) {
         <div className="form-card">
             {activeService === 'electricity' && (
                 <Lightning hue={260} xOffset={0} speed={0.5} intensity={0.6} size={2} />
+            )}
+            {activeService === 'gas' && (
+                <LiquidEther
+                    className="ether-background"
+                    style={{ position: 'absolute'}}
+                    colors={['#00b64c', '#00d8cd', '#90E0EF']}
+                    mouseForce={10}
+                    cursorSize={80}
+                    isViscous
+                    viscous={30}
+                    iterationsViscous={32}
+                    iterationsPoisson={32}
+                    resolution={0.5}
+                    isBounce={true}
+                    autoDemo
+                    autoSpeed={0.7}
+                    autoIntensity={2.2}
+                    takeoverDuration={0.25}
+                    autoResumeDelay={0}
+                    autoRampDuration={0.6}
+                    disableMouse
+                />
             )}
             <div className="form-content">
                 <div className="form-header">
@@ -127,19 +142,19 @@ export default function ContactForm({ formData, setFormData, onFormSubmit }) {
                 </div>
 
                 <div className="form-step-content">
-                    {(activeService === 'electricity' || activeService === 'both') && step === 1 && (
+                    {step === 1 && (
                         <BasicInfo formData={formData} setFormData={setFormData} throwError={throwError} setThrowError={setThrowError} />
                     )}
 
-                    {(activeService === 'electricity' || activeService === 'both') && step === 2 && (
+                    {step === 2 && (
                         <>
                             <div className="step-title">Τωρινός πάροχος</div>
-                            <ProviderInfo formData={formData} setFormData={setFormData} throwError={throwError} setThrowError={setThrowError} />
+                            <ProviderInfo formData={formData} setFormData={setFormData} throwError={throwError} setThrowError={setThrowError} activeService={activeService} providersData={providersData} />
                         </>
                     )}
 
-                    {(activeService === 'electricity' || activeService === 'both') && step === 3 && (
-                        <SpecificInfo formData={formData} setFormData={setFormData} setThrowError={setThrowError} />
+                    {step === 3 && (
+                        <SpecificInfo formData={formData} setFormData={setFormData} setThrowError={setThrowError} activeService={activeService} />
                     )}
                 </div>
 

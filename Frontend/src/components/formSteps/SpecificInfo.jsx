@@ -1,4 +1,4 @@
-export default function SpecificInfo({ formData, setFormData, setThrowError }) {
+export default function SpecificInfo({ formData, setFormData, setThrowError, activeService }) {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
@@ -23,17 +23,19 @@ export default function SpecificInfo({ formData, setFormData, setThrowError }) {
                 </div>
             </div>
 
-            <div className="form-group">
-                <label htmlFor="region">Περιοχή</label>
-                <select id="region" name="region" required value={formData.region} onChange={handleInputChange}>
-                    <option value="">Επίλεξε περιοχή</option>
-                    <option value="attiki">Αττική</option>
-                    <option value="thessaloniki">Θεσσαλονίκη</option>
-                    <option value="patra">Πάτρα</option>
-                    <option value="larisa">Λάρισα</option>
-                    <option value="other">Άλλη περιοχή</option>
-                </select>
-            </div>
+            {(activeService === 'gas' || activeService === 'both') && (
+                <div className="form-group">
+                    <label htmlFor="region">Περιοχή</label>
+                    <select id="region" name="region" required value={formData.region} onChange={handleInputChange}>
+                        <option value="">Επίλεξε περιοχή</option>
+                        <option value="attiki">Αττική</option>
+                        <option value="thessaloniki">Θεσσαλονίκη</option>
+                        <option value="patra">Πάτρα</option>
+                        <option value="larisa">Λάρισα</option>
+                        <option value="other">Άλλη περιοχή</option>
+                    </select>
+                </div>
+            )}
 
             <div className="form-group">
                 <label htmlFor="contact_time">Πότε να σε καλέσουμε;</label>

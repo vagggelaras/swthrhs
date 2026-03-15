@@ -1,36 +1,39 @@
-import deiLogo from '../../assets/deiLogo.svg'
-import enerwaveLogo from '../../assets/enerwaveLogo.svg'
-import eyniceLogo from '../../assets/eyniceLogo.svg'
-import hrwnLogo from '../../assets/hrwnLogo.svg'
-import protergiaLogo from '../../assets/protergiaLogo.svg'
-import zenithLogo from '../../assets/zenithLogo.svg'
+import { useMemo } from 'react'
 import '../styles/ProviderInfo.css'
 
-export default function ProviderInfo({ formData, setFormData, throwError, setThrowError }) {
-    const handleSelect = (provider) => {
-        setFormData(prev => ({ ...prev, provider }))
-        if(throwError?.includes('πάροχο')) setThrowError(null)
-    }
+export default function ProviderInfo({ formData, setFormData, throwError, setThrowError, activeService, providersData }) {
+    const providers = useMemo(() => {
+        if (!providersData) return []
+        if (activeService === 'both') return providersData
+        return providersData.filter(p => p.service_type === activeService)
+    }, [providersData, activeService])
 
-    const providers = [
-        { id: 'dei', src: deiLogo, alt: 'ΔΕΗ' },
-        { id: 'enerwave', src: enerwaveLogo, alt: 'Enerwave' },
-        { id: 'eynice', src: eyniceLogo, alt: 'Eynice' },
-        { id: 'hron', src: hrwnLogo, alt: 'Ήρων' },
-        { id: 'protergia', src: protergiaLogo, alt: 'Protergia' },
-        { id: 'zenith', src: zenithLogo, alt: 'Zenith' }
-    ]
+    const handleSelect = (providerId) => {
+        setFormData(prev => ({ ...prev, provider: providerId }))
+        if (throwError?.includes('πάροχο')) setThrowError(null)
+    }
 
     return (
         <div className="providerInfoContainer">
             {providers.map(provider => (
-                <img
-                    key={provider.id}
-                    src={provider.src}
-                    alt={provider.alt}
-                    className={formData.provider === provider.id ? 'selected' : ''}
-                    onClick={() => handleSelect(provider.id)}
-                />
+                provider.logo_url ? (
+                    <img
+                        key={provider.id}
+                        src={provider.logo_url}
+                        alt={provider.name}
+                        className={formData.provider === provider.id ? 'selected' : ''}
+                        onClick={() => handleSelect(provider.id)}
+                    />
+                ) : (
+                    <button
+                        key={provider.id}
+                        type="button"
+                        className={`provider-name-btn ${formData.provider === provider.id ? 'selected' : ''}`}
+                        onClick={() => handleSelect(provider.id)}
+                    >
+                        {provider.name}
+                    </button>
+                )
             ))}
             <button
                 type="button"
@@ -41,4 +44,4 @@ export default function ProviderInfo({ formData, setFormData, throwError, setThr
             </button>
         </div>
     )
-}   
+}

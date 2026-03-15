@@ -37,6 +37,7 @@ function App() {
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [pricesData, setPricesData] = useState([])
+  const [providersData, setProvidersData] = useState([])
   const [settingsVars, setSettingsVars] = useState({})
   const [selectedPlan, setSelectedPlan] = useState(null)
   const [detailSidebarOpen, setDetailSidebarOpen] = useState(false)
@@ -44,9 +45,10 @@ function App() {
 
   useEffect(() => {
     async function loadPrices() {
-      const [plansRes, settingsRes] = await Promise.all([
-        supabase.from('plans').select('*, providers(name, adjustment_factor)'),
-        supabase.from('settings').select('key, value')
+      const [plansRes, settingsRes, providersRes] = await Promise.all([
+        supabase.from('plans').select('*, providers(name, adjustment_factor, logo_url, service_type)'),
+        supabase.from('settings').select('key, value'),
+        supabase.from('providers').select('id, name, logo_url, service_type').order('name')
       ])
 
       if (plansRes.error) {
@@ -63,6 +65,8 @@ function App() {
       const flat = plansRes.data.map(plan => ({
         provider: plan.providers.name,
         adjustment_factor: plan.providers.adjustment_factor,
+        provider_logo: plan.providers.logo_url,
+        service_type: plan.providers.service_type,
         plan: plan.plan_name,
         tariff_type: plan.tariff_type,
         price_per_kwh: plan.price_per_kwh,
@@ -77,6 +81,7 @@ function App() {
         alpha: plan.alpha,
       }))
       setPricesData(flat)
+      if (providersRes.data) setProvidersData(providersRes.data)
     }
     loadPrices()
   }, [])
@@ -168,7 +173,7 @@ function App() {
       <div className="grid-overlay"></div>
 
       <Nav onCtaClick={handleCtaClick} sidebarOpen={sidebarOpen} onSidebarToggle={handleSidebarToggle} />
-      <Hero formData={formData} setFormData={setFormData} onFormSubmit={handleFormSubmit} />
+      <Hero formData={formData} setFormData={setFormData} onFormSubmit={handleFormSubmit} providersData={providersData} />
       <Features />
       <HowItWorks />
       <Testimonials />

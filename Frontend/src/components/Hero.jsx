@@ -1,13 +1,16 @@
 import ContactForm from './ContactForm'
 import './styles/Hero.css'
 
-function Hero({ formData, setFormData, onFormSubmit }) {
+function Hero({ formData, setFormData, onFormSubmit, providersData }) {
   return (
       <section className="hero">
         <div className="hero-content">
-          <div className="hero-text">
+          <div className="hero-text-top">
             <div className="badge">Δωρεάν Σύγκριση Τιμών</div>
             <h1>Εξοικονόμησε έως <span>40%</span> στους λογαριασμούς ενέργειας</h1>
+          </div>
+
+          <div className="hero-text-bottom">
             <p className="hero-description">
               Συγκρίνουμε όλους τους παρόχους ρεύματος και φυσικού αερίου στην Ελλάδα για να βρούμε την καλύτερη
               τιμή για σένα. Χωρίς κρυφές χρεώσεις.
@@ -34,8 +37,8 @@ function Hero({ formData, setFormData, onFormSubmit }) {
             </div>
           </div>
 
-          <ContactForm formData={formData} setFormData={setFormData} onFormSubmit={onFormSubmit} />
-        </div >
+          <ContactForm formData={formData} setFormData={setFormData} onFormSubmit={onFormSubmit} providersData={providersData} />
+        </div>
       </section >
   )
 }

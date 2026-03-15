@@ -7,30 +7,6 @@ import idFront from '../assets/idFront.svg'
 import idBack from '../assets/idBack.svg'
 import powerMeter from '../assets/powerMeter.svg'
 import billFront from '../assets/billFront.svg'
-import deiLogo from '../assets/deiLogo.svg'
-import enerwaveLogo from '../assets/enerwaveLogo.svg'
-import eyniceLogo from '../assets/eyniceLogo.svg'
-import hrwnLogo from '../assets/hrwnLogo.svg'
-import protergiaLogo from '../assets/protergiaLogo.svg'
-import zenithLogo from '../assets/zenithLogo.svg'
-
-const PROVIDER_LOGOS = {
-  'ΔΕΗ': deiLogo,
-  'ENERWAVE': enerwaveLogo,
-  'EUNICE': eyniceLogo,
-  'ΗΡΩΝ': hrwnLogo,
-  'PROTERGIA': protergiaLogo,
-  'ΖΕΝΙΘ': zenithLogo,
-}
-
-function getProviderLogo(name) {
-  if (!name) return null
-  const upper = name.toUpperCase()
-  for (const [key, logo] of Object.entries(PROVIDER_LOGOS)) {
-    if (upper.includes(key) || key.includes(upper)) return logo
-  }
-  return null
-}
 
 const UploadIcon = () => (
   <svg className="upload-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -429,8 +405,8 @@ export default function PlanDetailSidebar({ isOpen, onClose, selectedPlan, formD
                         </div>
                       </div>
                       <div className="detail-plan-logo">
-                        {getProviderLogo(selectedPlan.provider) ? (
-                          <img src={getProviderLogo(selectedPlan.provider)} alt={selectedPlan.provider} />
+                        {selectedPlan.provider_logo ? (
+                          <img src={selectedPlan.provider_logo} alt={selectedPlan.provider} />
                         ) : (
                           <span className="detail-plan-logo-fallback">{selectedPlan.provider.charAt(0)}</span>
                         )}

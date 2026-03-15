@@ -1,0 +1,24 @@
+.liquid-ether-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+}
+
+.ether-background.liquid-ether-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    z-index: 0;
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+body.light-mode .ether-background.liquid-ether-container {
+    opacity: 0.35;
+    mix-blend-mode: multiply;
+}
