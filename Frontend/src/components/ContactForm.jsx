@@ -9,7 +9,7 @@ import './styles/ContactForm.css'
 const GAS_COLORS = ['#00b64c', '#00d8cd', '#90E0EF']
 const GAS_STYLE = { position: 'absolute' }
 
-export default function ContactForm({ formData, setFormData, onFormSubmit, providersData }) {
+export default function ContactForm({ formData, setFormData, onFormSubmit, providersData, pricesData }) {
     const [activeService, setActiveService] = useState('electricity')
     const [toggleOpen, setToggleOpen] = useState(false)
     const [basicInfo, setBasicInfo] = useState({})
@@ -164,7 +164,7 @@ export default function ContactForm({ formData, setFormData, onFormSubmit, provi
                     {step === 2 && (
                         <>
                             <div className="step-title">Τωρινός πάροχος</div>
-                            <ProviderInfo formData={formData} setFormData={setFormData} throwError={throwError} setThrowError={setThrowError} activeService={activeService} providersData={providersData} />
+                            <ProviderInfo formData={formData} setFormData={setFormData} throwError={throwError} setThrowError={setThrowError} activeService={activeService} providersData={providersData} pricesData={pricesData} />
                         </>
                     )}
 

@@ -45,9 +45,9 @@ function App() {
   useEffect(() => {
     async function loadPrices() {
       const [plansRes, settingsRes, providersRes] = await Promise.all([
-        supabase.from('plans').select('*, providers(name, adjustment_factor, logo_url, service_type)'),
+        supabase.from('plans').select('*, providers(name, adjustment_factor, logo_url)'),
         supabase.from('settings').select('key, value'),
-        supabase.from('providers').select('id, name, logo_url, service_type').order('name')
+        supabase.from('providers').select('id, name, logo_url').order('name')
       ])
 
       if (plansRes.error) {
@@ -65,7 +65,7 @@ function App() {
         provider: plan.providers.name,
         adjustment_factor: plan.providers.adjustment_factor,
         provider_logo: plan.providers.logo_url,
-        service_type: plan.providers.service_type,
+        service_type: plan.service_type,
         plan: plan.plan_name,
         tariff_type: plan.tariff_type,
         price_per_kwh: plan.price_per_kwh,
@@ -173,7 +173,7 @@ function App() {
 
       <Nav onCtaClick={handleCtaClick} sidebarOpen={sidebarOpen} onSidebarToggle={handleSidebarToggle} />
       <main>
-        <Hero formData={formData} setFormData={setFormData} onFormSubmit={handleFormSubmit} providersData={providersData} />
+        <Hero formData={formData} setFormData={setFormData} onFormSubmit={handleFormSubmit} providersData={providersData} pricesData={pricesData} />
         <Features />
         <HowItWorks />
         <Testimonials />

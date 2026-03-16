@@ -1,12 +1,17 @@
 import { useMemo } from 'react'
 import '../styles/ProviderInfo.css'
 
-export default function ProviderInfo({ formData, setFormData, throwError, setThrowError, activeService, providersData }) {
+export default function ProviderInfo({ formData, setFormData, throwError, setThrowError, activeService, providersData, pricesData }) {
     const providers = useMemo(() => {
         if (!providersData) return []
         if (activeService === 'both') return providersData
-        return providersData.filter(p => p.service_type === activeService)
-    }, [providersData, activeService])
+        const providerIdsWithPlans = new Set(
+            (pricesData || [])
+                .filter(p => p.service_type === activeService)
+                .map(p => p.provider)
+        )
+        return providersData.filter(p => providerIdsWithPlans.has(p.name))
+    }, [providersData, pricesData, activeService])
 
     const handleSelect = (providerId) => {
         setFormData(prev => ({ ...prev, provider: providerId }))
