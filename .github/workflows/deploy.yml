@@ -32,6 +32,15 @@ jobs:
         run: npm ci
         working-directory: Frontend
 
+      - name: Install Chromium system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libgbm1 libnss3 libatk-bridge2.0-0 libatk1.0-0 \
+            libcups2 libdrm2 libxkbcommon0 libxcomposite1 \
+            libxdamage1 libxrandr2 libpango-1.0-0 libcairo2 \
+            libatspi2.0-0 libasound2t64
+
       - name: Build
         run: npm run build
         working-directory: Frontend

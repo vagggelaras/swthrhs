@@ -34,7 +34,10 @@ await new Promise(r => server.listen(4444, r))
 console.log('Server running at http://localhost:4444/swthrhs/')
 
 try {
-  const browser = await puppeteer.launch({ headless: true })
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  })
   const page = await browser.newPage()
 
   await page.goto('http://localhost:4444/swthrhs/', { waitUntil: 'networkidle0', timeout: 20000 })
