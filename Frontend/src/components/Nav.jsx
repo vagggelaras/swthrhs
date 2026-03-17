@@ -1,19 +1,24 @@
+import { useTranslation } from '../context/LanguageContext'
+import LanguageSwitcher from './LanguageSwitcher'
 import './styles/Nav.css'
 
 function Nav({ onCtaClick, sidebarOpen, onSidebarToggle }) {
+  const { t } = useTranslation()
+
   return (
-    <nav aria-label="Κύρια πλοήγηση">
+    <nav aria-label={t('nav.ariaLabel')}>
       <div className="nav-content">
         <a href="#" className="logo">
           <div className="logo-icon">⚡</div>
           EnergyCompare
         </a>
         <div className="nav-actions">
+          <LanguageSwitcher />
           <button className="nav-cta" onClick={onCtaClick}>
-            Ζήτα Προσφορά
+            {t('nav.requestOffer')}
           </button>
           <button className="nav-sidebar-toggle" onClick={onSidebarToggle}>
-            {sidebarOpen ? 'Σύγκρινε τιμές' : 'Σύγκρινε τιμές'}
+            {t('nav.comparePrices')}
           </button>
         </div>
       </div>

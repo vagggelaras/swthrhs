@@ -71,7 +71,11 @@
   line-height: 1.7;
 }
 
-/* Light mode: subtle background */
+/* Light mode: subtle background + accent dividers */
 body.light-mode .faq {
   background: linear-gradient(180deg, transparent 0%, rgba(45, 74, 124, 0.04) 50%, transparent 100%);
+}
+
+body.light-mode .faq-item {
+  border-bottom-color: var(--accent);
 }

@@ -1,36 +1,26 @@
 import { useState } from 'react'
+import { useTranslation } from '../context/LanguageContext'
 import './styles/FAQ.css'
 
 function FAQ() {
   const [activeFaq, setActiveFaq] = useState(null)
+  const { t } = useTranslation()
 
   const handleFaqClick = (index) => {
     setActiveFaq(activeFaq === index ? null : index)
   }
 
   const faqData = [
-    {
-      question: 'Είναι πραγματικά δωρεάν η υπηρεσία;',
-      answer: 'Ναι, η υπηρεσία μας είναι 100% δωρεάν για τους καταναλωτές. Πληρωνόμαστε από τους παρόχους ενέργειας ως προμήθεια για κάθε νέο πελάτη που τους φέρνουμε.'
-    },
-    {
-      question: 'Πόσο χρόνο παίρνει η αλλαγή παρόχου;',
-      answer: 'Η διαδικασία αλλαγής παρόχου ολοκληρώνεται συνήθως σε 2-4 εβδομάδες. Εμείς αναλαμβάνουμε όλη τη γραφειοκρατία για εσάς.'
-    },
-    {
-      question: 'Θα μείνω χωρίς ρεύμα κατά την αλλαγή;',
-      answer: 'Όχι, σε καμία περίπτωση. Η αλλαγή παρόχου γίνεται απρόσκοπτα και δεν επηρεάζει καθόλου την παροχή ρεύματος ή φυσικού αερίου.'
-    },
-    {
-      question: 'Ποιους παρόχους συγκρίνετε;',
-      answer: 'Συνεργαζόμαστε με όλους τους μεγάλους παρόχους της ελληνικής αγοράς: ΔΕΗ, Protergia, Elpedison, Zenith, NRG, Volterra, Watt+Volt και πολλούς ακόμα.'
-    }
+    { question: t('faq.q1'), answer: t('faq.a1') },
+    { question: t('faq.q2'), answer: t('faq.a2') },
+    { question: t('faq.q3'), answer: t('faq.a3') },
+    { question: t('faq.q4'), answer: t('faq.a4') },
   ]
 
   return (
-    <section className="faq" id="faq" aria-label="Συχνές ερωτήσεις">
+    <section className="faq" id="faq" aria-label={t('faq.ariaLabel')}>
       <div className="section-header">
-        <h2>Συχνές Ερωτήσεις</h2>
+        <h2>{t('faq.heading')}</h2>
       </div>
 
       <div className="faq-list">

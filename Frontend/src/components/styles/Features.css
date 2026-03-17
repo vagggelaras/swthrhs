@@ -2,13 +2,13 @@
 .features {
   position: relative;
   z-index: 1;
-  padding: 6rem 2rem;
+  padding: 7rem 2rem;
 }
 
 .features .section-header {
   text-align: center;
   max-width: 600px;
-  margin: 0 auto 4rem;
+  margin: 0 auto 4.5rem;
 }
 
 .features .section-header h2 {
@@ -30,53 +30,162 @@
   gap: 2rem;
 }
 
+/* ---- Card ---- */
 .feature-card {
+  position: relative;
   background: linear-gradient(145deg, var(--bg-surface-start) 0%, var(--bg-surface-end) 100%);
   border: 1px solid var(--border-subtle);
   border-radius: 20px;
-  padding: 2rem;
-  transition: all 0.4s ease;
+  padding: 2.5rem 2rem 2rem;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+  overflow: hidden;
+  /* scroll reveal – start hidden */
+  opacity: 0;
+  transform: translateY(32px);
 }
 
+.feature-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Accent top bar */
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 20px 20px 0 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+.feature-accent-blue::before {
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+}
+.feature-accent-gold::before {
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+}
+.feature-accent-green::before {
+  background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+/* Hover */
 .feature-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(245, 158, 11, 0.3);
-  box-shadow: 0 20px 40px var(--shadow-light);
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px var(--shadow-light);
+}
+
+.feature-accent-blue:hover  { border-color: rgba(59, 130, 246, 0.35); }
+.feature-accent-gold:hover  { border-color: rgba(245, 158, 11, 0.35); }
+.feature-accent-green:hover { border-color: rgba(16, 185, 129, 0.35); }
+
+/* ---- Icon ---- */
+.feature-icon-wrapper {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 1.75rem;
+}
+
+/* Glow behind icon */
+.feature-icon-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 18px;
+  opacity: 0;
+  filter: blur(12px);
+  transition: opacity 0.4s ease;
+  z-index: 0;
+}
+
+.feature-card:hover .feature-icon-wrapper::after {
+  opacity: 1;
+}
+
+.feature-accent-blue .feature-icon-wrapper::after {
+  background: rgba(59, 130, 246, 0.35);
+}
+.feature-accent-gold .feature-icon-wrapper::after {
+  background: rgba(245, 158, 11, 0.35);
+}
+.feature-accent-green .feature-icon-wrapper::after {
+  background: rgba(16, 185, 129, 0.35);
 }
 
 .feature-icon {
-  width: 56px;
-  height: 56px;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+  position: relative;
+  z-index: 1;
+  width: 60px;
+  height: 60px;
   border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+  color: #fff;
+  transition: transform 0.35s ease;
 }
 
+.feature-card:hover .feature-icon {
+  transform: scale(1.1);
+}
+
+.feature-accent-blue .feature-icon {
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+}
+.feature-accent-gold .feature-icon {
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+}
+.feature-accent-green .feature-icon {
+  background: linear-gradient(135deg, #10b981, #34d399);
+}
+
+/* ---- Text ---- */
 .feature-card h3 {
-  font-size: 1.25rem;
-  margin-bottom: 0.75rem;
+  font-size: 1.2rem;
+  margin-bottom: 0.65rem;
 }
 
 .feature-card p {
   color: var(--text-muted);
   font-size: 0.95rem;
+  line-height: 1.6;
 }
 
-/* Light mode: tinted section background */
+/* ---- Light mode ---- */
 body.light-mode .features {
   background: linear-gradient(180deg, transparent 0%, rgba(45, 74, 124, 0.05) 50%, transparent 100%);
 }
 
 body.light-mode .feature-card {
+  border-color: var(--accent);
   box-shadow: 0 4px 20px rgba(45, 74, 124, 0.08);
 }
 
-/* Responsive */
+body.light-mode .feature-accent-blue .feature-icon {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+}
+body.light-mode .feature-accent-gold .feature-icon {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+}
+body.light-mode .feature-accent-green .feature-icon {
+  background: linear-gradient(135deg, #059669, #10b981);
+}
+
+/* ---- Responsive ---- */
 @media (max-width: 968px) {
+  .features {
+    padding: 5rem 1.5rem;
+  }
+
   .features-grid {
     grid-template-columns: 1fr;
     max-width: 500px;

@@ -1,0 +1,34 @@
+.lang-switcher {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  padding: 0.4rem 0.65rem;
+  border-radius: 50px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+}
+
+.lang-switcher:hover {
+  background: var(--text-primary);
+  color: var(--bg-body);
+}
+
+.lang-switcher:active {
+  transform: scale(0.95);
+}
+
+body.light-mode .lang-switcher {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+body.light-mode .lang-switcher:hover {
+  background: #ffffff;
+  color: var(--deep-blue);
+}

@@ -1,4 +1,5 @@
 import { useMemo, useState, useRef, useCallback, useEffect } from 'react'
+import { useTranslation } from '../context/LanguageContext'
 import { resolvePlanPrice, resolvePlanNightPrice } from '../lib/formula'
 import './styles/PriceSidebar.css'
 
@@ -25,17 +26,18 @@ function kwhToSlider(kwh) {
 }
 
 const TARIFF_FILTERS = [
-  { key: 'Σταθερό Τιμολόγιο', label: 'Σταθερό', color: 'blue' },
-  { key: 'Κυμαινόμενο Τιμολόγιο', label: 'Κυμαινόμενο', color: 'yellow' },
-  { key: 'Ειδικό Τιμολόγιο', label: 'Ειδικό', color: 'green' },
-  { key: 'Δυναμικό Τιμολόγιο', label: 'Δυναμικό', color: 'orange' },
+  { key: 'Σταθερό Τιμολόγιο', labelKey: 'price.fixed', color: 'blue' },
+  { key: 'Κυμαινόμενο Τιμολόγιο', labelKey: 'price.variable', color: 'yellow' },
+  { key: 'Ειδικό Τιμολόγιο', labelKey: 'price.special', color: 'green' },
+  { key: 'Δυναμικό Τιμολόγιο', labelKey: 'price.dynamic', color: 'orange' },
 ]
 
 const TARIFF_COLOR_MAP = Object.fromEntries(
-  TARIFF_FILTERS.map(f => [f.key, { label: f.label, color: f.color }])
+  TARIFF_FILTERS.map(f => [f.key, { labelKey: f.labelKey, color: f.color }])
 )
 
 export default function PriceSidebar({ formData, setFormData, pricesData, settingsVars = {}, isOpen, onToggle, formSubmitted, onGoToForm, onPlanSelect, providersData }) {
+  const { t } = useTranslation()
   const [localKwh, setLocalKwh] = useState(null)
   const [localNightKwh, setLocalNightKwh] = useState(null)
   const isDragging = useRef(false)
@@ -145,19 +147,19 @@ export default function PriceSidebar({ formData, setFormData, pricesData, settin
 
       {/* Sidebar panel */}
       <aside className={`price-sidebar ${isOpen ? 'open' : ''}`}>
-        {isOpen && <button className="sidebar-close-btn" type="button" onClick={onToggle} aria-label="Κλείσιμο sidebar">
+        {isOpen && <button className="sidebar-close-btn" type="button" onClick={onToggle} aria-label={t('price.closeSidebar')}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         </button>}
         <div className="sidebar-header">
-          <h3>Σύγκριση Τιμών</h3>
+          <h3>{t('price.heading')}</h3>
           {formSubmitted && (
             <>
               <div className="sidebar-controls-row">
                 <div className="sidebar-controls-left" ref={dayControlRef}>
-                  <label className="sidebar-slider-label">Ημερήσια κατανάλωση:</label>
+                  <label className="sidebar-slider-label">{t('price.dayConsumption')}</label>
                   <div className="sidebar-kwh-input-row">
                     <input
                       type="number"
@@ -193,7 +195,7 @@ export default function PriceSidebar({ formData, setFormData, pricesData, settin
                   </div>
                 </div>
                 <div className="sidebar-controls-left" ref={nightControlRef}>
-                  <label className="sidebar-slider-label">Νυχτερινή κατανάλωση:</label>
+                  <label className="sidebar-slider-label">{t('price.nightConsumption')}</label>
                   <div className="sidebar-kwh-input-row">
                     <input
                       type="number"
@@ -230,7 +232,7 @@ export default function PriceSidebar({ formData, setFormData, pricesData, settin
                 </div>
               </div>
               <div className="tariff-filters">
-                <span className="tariff-filters-label">Φίλτρα:</span>
+                <span className="tariff-filters-label">{t('price.filters')}</span>
                 {TARIFF_FILTERS.map(f => (
                   <button
                     key={f.key}
@@ -238,7 +240,7 @@ export default function PriceSidebar({ formData, setFormData, pricesData, settin
                     onClick={() => toggleFilter(f.key)}
                   >
                     {activeFilters.has(f.key) && <span className="tariff-filter-check">✓</span>}
-                    {f.label}
+                    {t(f.labelKey)}
                   </button>
                 ))}
               </div>
@@ -253,9 +255,9 @@ export default function PriceSidebar({ formData, setFormData, pricesData, settin
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                 <path d="M7 11V7a5 5 0 0 1 10 0v4" />
               </svg>
-              <p>Συμπλήρωσε τη φόρμα για να συγκρίνεις τιμές παρόχων</p>
+              <p>{t('price.emptyForm')}</p>
               <button className="sidebar-goto-form-btn" type="button" onClick={() => { onGoToForm?.(); onToggle() }}>
-                Πήγαινε στη φόρμα
+                {t('price.goToForm')}
               </button>
             </div>
           ) : kWh === 0 ? (
@@ -265,7 +267,7 @@ export default function PriceSidebar({ formData, setFormData, pricesData, settin
                 <line x1="12" y1="20" x2="12" y2="4" />
                 <line x1="6" y1="20" x2="6" y2="14" />
               </svg>
-              <p>Μετακίνησε το slider παραπάνω για να δεις τιμές</p>
+              <p>{t('price.emptySlider')}</p>
             </div>
           ) : (
             <div className="plans-list">
@@ -293,21 +295,21 @@ export default function PriceSidebar({ formData, setFormData, pricesData, settin
                             <span className="plan-name">{plan.plan}</span>
                             {tariff && (
                               <span className={`plan-tariff-badge tariff-badge-${tariff.color}`}>
-                                {tariff.label}
+                                {t(tariff.labelKey)}
                               </span>
                             )}
                           </div>
                           <div className="plan-cost">
-                            <span className="cost-value">{plan.monthlyCost.toFixed(2)}&euro; <span className="cost-label">/μήνα</span></span>
+                            <span className="cost-value">{plan.monthlyCost.toFixed(2)}&euro; <span className="cost-label">{t('price.perMonth')}</span></span>
                           </div>
                         </div>
                         <div className="plan-card-bottom">
                           <div className="plan-details">
                             <span>{plan.resolved_price.toFixed(4)} €/kWh</span>
                             <span className="plan-detail-sep">·</span>
-                            <span>Πάγιο: {(plan.monthly_fee_eur ?? 0).toFixed(2)}€</span>
+                            <span>{t('price.fixedFee')} {(plan.monthly_fee_eur ?? 0).toFixed(2)}€</span>
                           </div>
-                          <button className="plan-select-btn" type="button" onClick={() => onPlanSelect?.(plan)}>Με ενδιαφέρει</button>
+                          <button className="plan-select-btn" type="button" onClick={() => onPlanSelect?.(plan)}>{t('price.interested')}</button>
                         </div>
                       </div>
                       <div className="plan-chevron-col" onClick={() => { setExpandedCard(isExpanded ? null : cardKey); setActiveTab('charges') }}>
@@ -324,36 +326,36 @@ export default function PriceSidebar({ formData, setFormData, pricesData, settin
                             className={`plan-tab-btn ${activeTab === 'charges' ? 'active' : ''}`}
                             onClick={() => setActiveTab('charges')}
                           >
-                            Αναλυτική Χρέωση
+                            {t('price.detailedCharges')}
                           </button>
                           <button
                             type="button"
                             className={`plan-tab-btn ${activeTab === 'provider' ? 'active' : ''}`}
                             onClick={() => setActiveTab('provider')}
                           >
-                            Πληροφορίες Προμηθευτή
+                            {t('price.providerInfo')}
                           </button>
                         </div>
                         <div className="plan-expanded-content">
                           {activeTab === 'charges' ? (
                             <ul className="plan-charges-list">
                               <li>
-                                <span className="charge-label">Ημερήσια χρέωση</span>
+                                <span className="charge-label">{t('price.dayCharge')}</span>
                                 <span className="charge-value">{plan.resolved_price.toFixed(4)} €/kWh</span>
                               </li>
                               {plan.resolved_night_price != null && (
                                 <li>
-                                  <span className="charge-label">Νυχτερινή χρέωση</span>
+                                  <span className="charge-label">{t('price.nightCharge')}</span>
                                   <span className="charge-value">{plan.resolved_night_price.toFixed(4)} €/kWh</span>
                                 </li>
                               )}
                               <li>
-                                <span className="charge-label">Πάγιο</span>
-                                <span className="charge-value">{(plan.monthly_fee_eur ?? 0).toFixed(2)} €/μήνα</span>
+                                <span className="charge-label">{t('price.fixedFeeLabel')}</span>
+                                <span className="charge-value">{(plan.monthly_fee_eur ?? 0).toFixed(2)} {t('price.perMonthUnit')}</span>
                               </li>
                             </ul>
                           ) : (
-                            <p className="plan-expanded-placeholder">Πληροφορίες προμηθευτή...</p>
+                            <p className="plan-expanded-placeholder">{t('price.providerInfoPlaceholder')}</p>
                           )}
                         </div>
                       </div>

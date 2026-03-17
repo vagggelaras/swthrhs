@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from '../context/LanguageContext'
 import SpecificInfo from './formSteps/SpecificInfo'
 import BasicInfo from './formSteps/BasicInfo'
 import ProviderInfo from './formSteps/ProviderInfo'
@@ -10,6 +11,7 @@ const GAS_COLORS = ['#00b64c', '#00d8cd', '#90E0EF']
 const GAS_STYLE = { position: 'absolute' }
 
 export default function ContactForm({ formData, setFormData, onFormSubmit, providersData, pricesData }) {
+    const { t } = useTranslation()
     const [activeService, setActiveService] = useState('electricity')
     const [toggleOpen, setToggleOpen] = useState(false)
     const [basicInfo, setBasicInfo] = useState({})
@@ -40,11 +42,21 @@ export default function ContactForm({ formData, setFormData, onFormSubmit, provi
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const data = {
-            service: activeService,
-            ...formData
+        setThrowError(null)
+
+        if (!formData.name || !formData.name.trim()) {
+            setThrowError('errors.name')
+            return
         }
-        console.log('Form submitted:', data)
+        if (!formData.phone || !/^[0-9]{10}$/.test(formData.phone)) {
+            setThrowError('errors.phone')
+            return
+        }
+        if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            setThrowError('errors.email')
+            return
+        }
+
         onFormSubmit?.()
     }
 
@@ -58,14 +70,19 @@ export default function ContactForm({ formData, setFormData, onFormSubmit, provi
     const handleNext = () => {
         setThrowError(null)
         if (step === 1) {
-            if (formData.customerType !== 'professional') {
+            if (formData.customerType === 'professional') {
+                if (!formData.businessTariff) {
+                    setThrowError('errors.businessTariff')
+                    return
+                }
+            } else {
                 if (!formData.nightTariff) {
-                    setThrowError('Παρακαλώ επιλέξτε εάν έχετε νυχτερινό τιμολόγιο ή όχι.')
+                    setThrowError('errors.nightTariff')
                     return
                 }
 
                 if (!formData.socialTariff) {
-                    setThrowError('Παρακαλώ επιλέξτε εάν λαμβάνετε κοινωνικό τιμολόγιο ή όχι.')
+                    setThrowError('errors.socialTariff')
                     return
                 }
             }
@@ -80,7 +97,7 @@ export default function ContactForm({ formData, setFormData, onFormSubmit, provi
             setStep(2)
         } else if (step === 2) {
             if (!formData.provider) {
-                setThrowError('Παρακαλώ επιλέξτε πάροχο.')
+                setThrowError('errors.provider')
                 return
             }
 
@@ -117,8 +134,8 @@ export default function ContactForm({ formData, setFormData, onFormSubmit, provi
             )}
             <div className="form-content">
                 <div className="form-header">
-                    <h2>Λάβε Δωρεάν Προσφορά</h2>
-                    <p>Συμπλήρωσε τα στοιχεία σου και θα σε καλέσουμε</p>
+                    <h2>{t('form.heading')}</h2>
+                    <p>{t('form.subheading')}</p>
                 </div>
 
             <form id="leadForm" onSubmit={handleSubmit}>
@@ -128,7 +145,7 @@ export default function ContactForm({ formData, setFormData, onFormSubmit, provi
                         className={`toggle-btn ${activeService === 'electricity' ? 'active' : ''}`}
                         onClick={() => handleToggle('electricity', activeService === 'electricity')}
                     >
-                            {/* ⚡  */}Ρεύμα
+                            {t('common.electricity')}
                         <i className="fa-solid fa-chevron-down toggle-arrow"></i>
                     </button>
                     <button
@@ -136,7 +153,7 @@ export default function ContactForm({ formData, setFormData, onFormSubmit, provi
                         className={`toggle-btn ${activeService === 'gas' ? 'active' : ''}`}
                         onClick={() => handleToggle('gas', activeService === 'gas')}
                     >
-                        {/*🔥*/} Φ. Αέριο
+                        {t('common.gas')}
                         <i className="fa-solid fa-chevron-down toggle-arrow"></i>
                     </button>
                     <button
@@ -144,13 +161,13 @@ export default function ContactForm({ formData, setFormData, onFormSubmit, provi
                         className={`toggle-btn ${activeService === 'both' ? 'active' : ''}`}
                         onClick={() => handleToggle('both', activeService === 'both')}
                     >
-                        {/*✨*/} Και τα δύο
+                        {t('common.both')}
                         <i className="fa-solid fa-chevron-down toggle-arrow"></i>
                     </button>
                 </div>
 
                 <div className="step-indicator">
-                    <div className="step-text">Βήμα {step}/3</div>
+                    <div className="step-text">{t('form.step')} {step}/3</div>
                     <div className="step-bar">
                         <div className="step-bar-fill" style={{ width: `${(step / 3) * 100}%` }} />
                     </div>
@@ -163,7 +180,7 @@ export default function ContactForm({ formData, setFormData, onFormSubmit, provi
 
                     {step === 2 && (
                         <>
-                            <div className="step-title">Τωρινός πάροχος</div>
+                            <div className="step-title">{t('form.currentProvider')}</div>
                             <ProviderInfo formData={formData} setFormData={setFormData} throwError={throwError} setThrowError={setThrowError} activeService={activeService} providersData={providersData} pricesData={pricesData} />
                         </>
                     )}
@@ -174,7 +191,7 @@ export default function ContactForm({ formData, setFormData, onFormSubmit, provi
                 </div>
 
                 <div className={throwError ? "error-container" : "error-container hidden"}>
-                    <p className="error-message">{throwError}‎ </p>
+                    <p className="error-message">{throwError ? t(throwError) : ''}‎ </p>
                 </div>
 
                 <div className="form-buttons">
@@ -184,7 +201,7 @@ export default function ContactForm({ formData, setFormData, onFormSubmit, provi
                         </button>
                     )}
                     <button type={step === 3 ? 'submit' : 'button'} onClick={step !== 3 ? handleNext : undefined} className="next-btn">
-                        {step !== 3 ? <i className="fa-solid fa-arrow-right fa-xl"></i> : 'Θέλω να με καλέσετε'}
+                        {step !== 3 ? <i className="fa-solid fa-arrow-right fa-xl"></i> : t('form.callMe')}
                     </button>
                 </div>
 
@@ -195,7 +212,7 @@ export default function ContactForm({ formData, setFormData, onFormSubmit, provi
                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                 </svg>
-                Τα στοιχεία σου είναι ασφαλή
+                {t('form.secureInfo')}
             </p>
             </div>
         </div>

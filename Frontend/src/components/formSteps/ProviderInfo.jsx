@@ -1,7 +1,10 @@
 import { useMemo } from 'react'
+import { useTranslation } from '../../context/LanguageContext'
 import '../styles/ProviderInfo.css'
 
 export default function ProviderInfo({ formData, setFormData, throwError, setThrowError, activeService, providersData, pricesData }) {
+    const { t } = useTranslation()
+
     const providers = useMemo(() => {
         if (!providersData) return []
         if (activeService === 'both') return providersData
@@ -15,7 +18,7 @@ export default function ProviderInfo({ formData, setFormData, throwError, setThr
 
     const handleSelect = (providerId) => {
         setFormData(prev => ({ ...prev, provider: providerId }))
-        if (throwError?.includes('πάροχο')) setThrowError(null)
+        if (throwError === 'errors.provider') setThrowError(null)
     }
 
     return (
@@ -45,7 +48,7 @@ export default function ProviderInfo({ formData, setFormData, throwError, setThr
                 className={`provider-unknown-btn ${formData.provider === 'unknown' ? 'selected' : ''}`}
                 onClick={() => handleSelect('unknown')}
             >
-                Δεν γνωρίζω
+                {t('providerInfo.unknown')}
             </button>
         </div>
     )

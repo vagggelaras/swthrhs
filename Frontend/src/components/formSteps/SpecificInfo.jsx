@@ -1,4 +1,7 @@
+import { useTranslation } from '../../context/LanguageContext'
+
 export default function SpecificInfo({ formData, setFormData, setThrowError, activeService }) {
+    const { t } = useTranslation()
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
@@ -8,53 +11,45 @@ export default function SpecificInfo({ formData, setFormData, setThrowError, act
     return (
         <>
             <div className="form-group">
-                <label htmlFor="name">Ονοματεπώνυμο</label>
-                <input type="text" id="name" name="name" placeholder="π.χ. Γιάννης Παπαδόπουλος" required value={formData.name} onChange={handleInputChange} />
+                <label htmlFor="name">{t('specificInfo.fullName')}</label>
+                <input type="text" id="name" name="name" placeholder={t('specificInfo.namePlaceholder')} required value={formData.name} onChange={handleInputChange} />
             </div>
 
             <div className="form-group-row">
                 <div className="form-group">
-                    <label htmlFor="phone">Τηλέφωνο</label>
-                    <input type="tel" id="phone" name="phone" placeholder="69xxxxxxxx" required value={formData.phone} onChange={handleInputChange} />
+                    <label htmlFor="phone">{t('specificInfo.phone')}</label>
+                    <input type="tel" id="phone" name="phone" placeholder="69xxxxxxxx" required pattern="[0-9]{10}" title={t('specificInfo.phoneTitle')} value={formData.phone} onChange={handleInputChange} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="π.χ. email@example.com" required value={formData.email || ''} onChange={handleInputChange} />
+                    <label htmlFor="email">{t('specificInfo.email')}</label>
+                    <input type="email" id="email" name="email" placeholder={t('specificInfo.emailPlaceholder')} required value={formData.email || ''} onChange={handleInputChange} />
                 </div>
             </div>
 
             {(activeService === 'gas' || activeService === 'both') && (
                 <div className="form-group">
-                    <label htmlFor="region">Περιοχή</label>
+                    <label htmlFor="region">{t('specificInfo.region')}</label>
                     <select id="region" name="region" required value={formData.region} onChange={handleInputChange}>
-                        <option value="">Επίλεξε περιοχή</option>
-                        <option value="attiki">Αττική</option>
-                        <option value="thessaloniki">Θεσσαλονίκη</option>
-                        <option value="patra">Πάτρα</option>
-                        <option value="larisa">Λάρισα</option>
-                        <option value="other">Άλλη περιοχή</option>
+                        <option value="">{t('specificInfo.selectRegion')}</option>
+                        <option value="attiki">{t('specificInfo.attiki')}</option>
+                        <option value="thessaloniki">{t('specificInfo.thessaloniki')}</option>
+                        <option value="patra">{t('specificInfo.patra')}</option>
+                        <option value="larisa">{t('specificInfo.larisa')}</option>
+                        <option value="other">{t('specificInfo.otherRegion')}</option>
                     </select>
                 </div>
             )}
 
             <div className="form-group">
-                <label htmlFor="contact_time">Πότε να σε καλέσουμε;</label>
+                <label htmlFor="contact_time">{t('specificInfo.callTime')}</label>
                 <select id="contact_time" name="contact_time" value={formData.contact_time} onChange={handleInputChange} >
-                    <option value="anytime">Οποιαδήποτε ώρα</option>
-                    <option value="morning">Πρωί (09:00 - 12:00)</option>
-                    <option value="noon">Μεσημερι (12:00 - 15:00)</option>
-                    <option value="afternoon">Απόγευμα (15:00 - 18:00)</option>
-                    <option value="evening">Βράδυ (18:00 - 21:00)</option>
+                    <option value="anytime">{t('specificInfo.anytime')}</option>
+                    <option value="morning">{t('specificInfo.morning')}</option>
+                    <option value="noon">{t('specificInfo.noon')}</option>
+                    <option value="afternoon">{t('specificInfo.afternoon')}</option>
+                    <option value="evening">{t('specificInfo.evening')}</option>
                 </select>
             </div>
-
-            {/* <button type="submit" className="submit-btn">
-                Θέλω να με καλέσετε
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-            </button> */}
         </>
     )
 }
