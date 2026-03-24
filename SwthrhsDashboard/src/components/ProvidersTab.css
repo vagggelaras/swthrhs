@@ -338,3 +338,26 @@ select.inline-input option {
   margin: 0;
   accent-color: var(--accent);
 }
+
+.inline-textarea {
+  resize: vertical;
+  min-height: 2.5rem;
+  font-size: 0.8rem;
+}
+
+.info-text-cell {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.center-cell {
+  text-align: center;
+}
+
+.center-cell input[type="checkbox"] {
+  width: auto;
+  cursor: pointer;
+  accent-color: var(--accent);
+}

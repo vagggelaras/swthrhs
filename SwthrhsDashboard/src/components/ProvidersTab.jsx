@@ -30,7 +30,7 @@ export default function ProvidersTab({ serviceType }) {
   const [showModal, setShowModal] = useState(false)
   const [editingId, setEditingId] = useState(null)
   const [editData, setEditData] = useState({})
-  const [form, setForm] = useState({ name: '', adjustment_factor: '', logo_svg: '' })
+  const [form, setForm] = useState({ name: '', adjustment_factor: '', logo_svg: '', has_gas: false })
   const [search, setSearch] = useState('')
   const [error, setError] = useState(null)
   const [editLogoModal, setEditLogoModal] = useState(null)
@@ -51,21 +51,33 @@ export default function ProvidersTab({ serviceType }) {
       const cached = cacheGet(cacheKey)
       if (cached) { setProviders(cached); setLoading(false); return }
     }
-    // Get provider IDs that have at least one plan for this service type
-    const { data: planRows, error: planErr } = await supabase
-      .from('plans')
-      .select('provider_id')
-      .eq('service_type', serviceType)
-    if (planErr) { setError(planErr.message); setLoading(false); return }
-    const providerIds = [...new Set(planRows.map(r => r.provider_id))]
-    if (providerIds.length === 0) { setProviders([]); cacheSet(cacheKey, []); setLoading(false); return }
-    const { data, error } = await supabase
-      .from('providers')
-      .select('*')
-      .in('id', providerIds)
-      .order('created_at', { ascending: true })
-    if (error) setError(error.message)
-    else { setProviders(data); cacheSet(cacheKey, data) }
+
+    if (serviceType === 'gas') {
+      // Gas tab: show providers flagged with has_gas
+      const { data, error } = await supabase
+        .from('providers')
+        .select('*')
+        .eq('has_gas', true)
+        .order('created_at', { ascending: true })
+      if (error) setError(error.message)
+      else { setProviders(data); cacheSet(cacheKey, data) }
+    } else {
+      // Electricity tab: show providers that have at least one electricity plan
+      const { data: planRows, error: planErr } = await supabase
+        .from('plans')
+        .select('provider_id')
+        .eq('service_type', serviceType)
+      if (planErr) { setError(planErr.message); setLoading(false); return }
+      const providerIds = [...new Set(planRows.map(r => r.provider_id))]
+      if (providerIds.length === 0) { setProviders([]); cacheSet(cacheKey, []); setLoading(false); return }
+      const { data, error } = await supabase
+        .from('providers')
+        .select('*')
+        .in('id', providerIds)
+        .order('created_at', { ascending: true })
+      if (error) setError(error.message)
+      else { setProviders(data); cacheSet(cacheKey, data) }
+    }
     setLoading(false)
   }
 
@@ -76,11 +88,21 @@ export default function ProvidersTab({ serviceType }) {
       name: form.name,
       adjustment_factor: form.adjustment_factor ? safeNumber(form.adjustment_factor, null) : null,
       logo_url: svgToDataUri(form.logo_svg),
+      has_gas: form.has_gas || false,
     })
     if (error) { setError(error.message); return }
-    setForm({ name: '', adjustment_factor: '', logo_svg: '' })
+    setForm({ name: '', adjustment_factor: '', logo_svg: '', has_gas: false })
     setShowModal(false)
-    cacheInvalidate(cacheKey, 'admin_plans')
+    cacheInvalidate(cacheKey, 'admin_plans', `${CACHE_KEY}_gas`, `${CACHE_KEY}_electricity`)
+    fetchProviders(true)
+  }
+
+  async function toggleGas(provider) {
+    setError(null)
+    const newVal = !provider.has_gas
+    const { error } = await supabase.from('providers').update({ has_gas: newVal }).eq('id', provider.id)
+    if (error) { setError(error.message); return }
+    cacheInvalidate(cacheKey, 'admin_plans', `${CACHE_KEY}_gas`, `${CACHE_KEY}_electricity`)
     fetchProviders(true)
   }
 
@@ -89,6 +111,7 @@ export default function ProvidersTab({ serviceType }) {
     setEditData({
       name: provider.name,
       adjustment_factor: provider.adjustment_factor ?? '',
+      info_text: provider.info_text ?? '',
     })
   }
 
@@ -97,6 +120,7 @@ export default function ProvidersTab({ serviceType }) {
     const { error } = await supabase.from('providers').update({
       name: editData.name,
       adjustment_factor: editData.adjustment_factor !== '' ? safeNumber(editData.adjustment_factor, null) : null,
+      info_text: editData.info_text || '',
     }).eq('id', id)
     if (error) { setError(error.message); return }
     setEditingId(null)
@@ -162,6 +186,8 @@ export default function ProvidersTab({ serviceType }) {
                 <th>Logo</th>
                 <th>Όνομα</th>
                 <th>Adjustment Factor</th>
+                <th>Κείμενο</th>
+                <th>Αέριο</th>
                 <th>Ημ/νία</th>
                 <th>Actions</th>
               </tr>
@@ -193,6 +219,18 @@ export default function ProvidersTab({ serviceType }) {
                           onChange={e => setEditData({ ...editData, adjustment_factor: e.target.value })}
                         />
                       </td>
+                      <td>
+                        <textarea
+                          className="inline-input inline-textarea"
+                          value={editData.info_text}
+                          onChange={e => setEditData({ ...editData, info_text: e.target.value })}
+                          rows={2}
+                          placeholder="Κείμενο παρόχου..."
+                        />
+                      </td>
+                      <td className="center-cell">
+                        <input type="checkbox" checked={!!p.has_gas} onChange={() => toggleGas(p)} />
+                      </td>
                       <td>{new Date(p.created_at).toLocaleDateString('el-GR')}</td>
                       <td className="actions">
                         <button className="btn-save" onClick={() => saveEdit(p.id)}>Save</button>
@@ -209,6 +247,10 @@ export default function ProvidersTab({ serviceType }) {
                       </td>
                       <td>{p.name}</td>
                       <td>{p.adjustment_factor ?? '—'}</td>
+                      <td className="info-text-cell">{p.info_text || '—'}</td>
+                      <td className="center-cell">
+                        <input type="checkbox" checked={!!p.has_gas} onChange={() => toggleGas(p)} />
+                      </td>
                       <td>{new Date(p.created_at).toLocaleDateString('el-GR')}</td>
                       <td className="actions">
                         <button className="btn-edit" onClick={() => startEdit(p)}>Edit</button>
@@ -219,7 +261,7 @@ export default function ProvidersTab({ serviceType }) {
                 </tr>
               ))}
               {filtered.length === 0 && (
-                <tr><td colSpan="5" className="empty-row">{search ? 'Κανένα αποτέλεσμα' : 'Δεν υπάρχουν providers'}</td></tr>
+                <tr><td colSpan="7" className="empty-row">{search ? 'Κανένα αποτέλεσμα' : 'Δεν υπάρχουν providers'}</td></tr>
               )}
             </tbody>
           </table>
@@ -264,6 +306,14 @@ export default function ProvidersTab({ serviceType }) {
                   value={form.adjustment_factor}
                   onChange={e => setForm({ ...form, adjustment_factor: e.target.value })}
                 />
+              </label>
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={form.has_gas}
+                  onChange={e => setForm({ ...form, has_gas: e.target.checked })}
+                />
+                Και για Αέριο
               </label>
               <div className="modal-actions">
                 <button type="button" className="btn-cancel" onClick={() => setShowModal(false)}>Cancel</button>
