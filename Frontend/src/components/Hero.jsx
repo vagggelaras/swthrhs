@@ -2,7 +2,7 @@ import { useTranslation } from '../context/LanguageContext'
 import ContactForm from './ContactForm'
 import './styles/Hero.css'
 
-function Hero({ formData, setFormData, onFormSubmit, providersData, pricesData }) {
+function Hero({ formData, setFormData, onFormSubmit, providersData, pricesData, activeService, setActiveService }) {
   const { t } = useTranslation()
 
   return (
@@ -39,7 +39,7 @@ function Hero({ formData, setFormData, onFormSubmit, providersData, pricesData }
             </div>
           </div>
 
-          <ContactForm formData={formData} setFormData={setFormData} onFormSubmit={onFormSubmit} providersData={providersData} pricesData={pricesData} />
+          <ContactForm formData={formData} setFormData={setFormData} onFormSubmit={onFormSubmit} providersData={providersData} pricesData={pricesData} activeService={activeService} setActiveService={setActiveService} />
         </div>
       </section >
   )

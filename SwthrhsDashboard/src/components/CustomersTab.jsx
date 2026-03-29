@@ -45,6 +45,46 @@ const FILE_LABELS = {
   tautotita_nomimou_ekprosopou: 'Ταυτότητα Νόμιμου Εκπροσώπου',
 }
 
+function FileThumb({ pathOrUrl, label, index, onLightbox, resolveFileUrl }) {
+  const [url, setUrl] = useState(null)
+  const [failed, setFailed] = useState(false)
+
+  useEffect(() => {
+    if (!pathOrUrl) return
+    if (!pathOrUrl.startsWith('http')) {
+      // Storage path — resolve to signed URL
+      let cancelled = false
+      setFailed(false)
+      resolveFileUrl(pathOrUrl).then(resolved => {
+        if (cancelled) return
+        if (resolved) setUrl(resolved)
+        else setFailed(true)
+      })
+      return () => { cancelled = true }
+    } else {
+      setUrl(pathOrUrl)
+    }
+  }, [pathOrUrl, resolveFileUrl])
+
+  if (failed) return <span className="ct-file-loading" title="Δεν φόρτωσε">⚠</span>
+  if (!url) return <span className="ct-file-loading">...</span>
+
+  const isImage = /\.(jpg|jpeg|png|gif|webp)(\?|$)/i.test(pathOrUrl)
+  return isImage ? (
+    <img
+      src={url}
+      alt={`${label} ${index + 1}`}
+      className="ct-file-thumb"
+      onClick={() => onLightbox(url)}
+    />
+  ) : (
+    <a href={url} target="_blank" rel="noopener noreferrer" className="ct-file-pdf">
+      <i className="fa-solid fa-file-pdf"></i>
+      <span>PDF {index > 0 ? index + 1 : ''}</span>
+    </a>
+  )
+}
+
 export default function CustomersTab({ user }) {
   const [submissions, setSubmissions] = useState([])
   const [statusOptions, setStatusOptions] = useState(DEFAULT_statusOptions)
@@ -242,20 +282,11 @@ export default function CustomersTab({ user }) {
     }
   }
 
-  function isImagePath(urlOrPath) {
-    if (!urlOrPath) return false
-    return /\.(jpg|jpeg|png|gif|webp)(\?|$)/i.test(urlOrPath)
-  }
-
-  function isStoragePath(val) {
-    return val && !val.startsWith('http')
-  }
-
   const signedUrlCache = useRef({})
 
   const resolveFileUrl = useCallback(async (pathOrUrl) => {
     if (!pathOrUrl) return null
-    if (!isStoragePath(pathOrUrl)) return pathOrUrl
+    if (pathOrUrl.startsWith('http')) return pathOrUrl
     if (signedUrlCache.current[pathOrUrl]) {
       const cached = signedUrlCache.current[pathOrUrl]
       if (cached.expiry > Date.now()) return cached.url
@@ -272,32 +303,6 @@ export default function CustomersTab({ user }) {
     setNoteText('')
   }
 
-  function FileThumb({ pathOrUrl, label, index, onLightbox }) {
-    const [url, setUrl] = useState(isStoragePath(pathOrUrl) ? null : pathOrUrl)
-
-    useEffect(() => {
-      if (!pathOrUrl || !isStoragePath(pathOrUrl)) return
-      let cancelled = false
-      resolveFileUrl(pathOrUrl).then(resolved => { if (!cancelled && resolved) setUrl(resolved) })
-      return () => { cancelled = true }
-    }, [pathOrUrl])
-
-    if (!url) return <span className="ct-file-loading">...</span>
-
-    return isImagePath(pathOrUrl) ? (
-      <img
-        src={url}
-        alt={`${label} ${index + 1}`}
-        className="ct-file-thumb"
-        onClick={() => onLightbox(url)}
-      />
-    ) : (
-      <a href={url} target="_blank" rel="noopener noreferrer" className="ct-file-pdf">
-        <i className="fa-solid fa-file-pdf"></i>
-        <span>PDF {index > 0 ? index + 1 : ''}</span>
-      </a>
-    )
-  }
 
   return (
     <div className="customers-tab">
@@ -476,8 +481,11 @@ export default function CustomersTab({ user }) {
                                     <dt>ΑΦΜ</dt><dd>{detail.afm || '—'}</dd>
                                     <dt>ΔΟΥ</dt><dd>{detail.doy || '—'}</dd>
                                     <dt>Πάγια εντολή</dt><dd>{detail.pagia_entoli ? 'Ναι' : 'Όχι'}</dd>
+                                    {detail.iban && <><dt>IBAN</dt><dd>{detail.iban}</dd></>}
+                                    {detail.onoma_dikaiouhou && <><dt>Δικαιούχος</dt><dd>{detail.onoma_dikaiouhou}</dd></>}
+                                    {detail.onoma_trapezas && <><dt>Τράπεζα</dt><dd>{detail.onoma_trapezas}</dd></>}
                                     <dt>Αλλαγή ονόματος</dt><dd>{detail.allagi_onomatos ? 'Ναι' : 'Όχι'}</dd>
-                                    <dt>Ιδιοκτησία</dt><dd>{detail.idpiothsia || '—'}</dd>
+                                    <dt>Ιδιοκτησία</dt><dd>{detail.idiotita || '—'}</dd>
                                   </dl>
                                 </div>
                               )}
@@ -503,6 +511,7 @@ export default function CustomersTab({ user }) {
                                               label={label}
                                               index={i}
                                               onLightbox={setLightbox}
+                                              resolveFileUrl={resolveFileUrl}
                                             />
                                           ))}
                                         </div>

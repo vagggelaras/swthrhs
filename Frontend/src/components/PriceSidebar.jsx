@@ -36,7 +36,7 @@ const TARIFF_COLOR_MAP = Object.fromEntries(
   TARIFF_FILTERS.map(f => [f.key, { labelKey: f.labelKey, color: f.color }])
 )
 
-export default function PriceSidebar({ formData, setFormData, pricesData, settingsVars = {}, isOpen, onToggle, formSubmitted, onGoToForm, onPlanSelect, selectedPlan, providersData }) {
+export default function PriceSidebar({ formData, setFormData, pricesData, settingsVars = {}, isOpen, onToggle, formSubmitted, onGoToForm, onPlanSelect, selectedPlan, providersData, activeService }) {
   const { t } = useTranslation()
   const [localKwh, setLocalKwh] = useState(null)
   const [localNightKwh, setLocalNightKwh] = useState(null)
@@ -114,6 +114,7 @@ export default function PriceSidebar({ formData, setFormData, pricesData, settin
     if (!pricesData.length || kWh === 0) return []
 
     return pricesData
+      .filter(plan => activeService === 'both' || plan.service_type === activeService)
       .filter(plan => activeFilters.size === 0 || activeFilters.has(plan.tariff_type))
       .map(plan => {
         // Merge provider adjustment_factor into variables
@@ -138,7 +139,7 @@ export default function PriceSidebar({ formData, setFormData, pricesData, settin
       })
       .filter(Boolean)
       .sort((a, b) => a.monthlyCost - b.monthlyCost)
-  }, [pricesData, settingsVars, kWh, nightKwh, activeFilters])
+  }, [pricesData, settingsVars, kWh, nightKwh, activeFilters, activeService])
 
   return (
     <>

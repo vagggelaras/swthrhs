@@ -10,9 +10,8 @@ import './styles/ContactForm.css'
 const GAS_COLORS = ['#00b64c', '#00d8cd', '#90E0EF']
 const GAS_STYLE = { position: 'absolute' }
 
-export default function ContactForm({ formData, setFormData, onFormSubmit, providersData, pricesData }) {
+export default function ContactForm({ formData, setFormData, onFormSubmit, providersData, pricesData, activeService, setActiveService }) {
     const { t } = useTranslation()
-    const [activeService, setActiveService] = useState('electricity')
     const [toggleOpen, setToggleOpen] = useState(false)
     const [basicInfo, setBasicInfo] = useState({})
     const [throwError, setThrowError] = useState()

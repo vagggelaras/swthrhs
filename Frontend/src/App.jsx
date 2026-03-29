@@ -39,6 +39,7 @@ function App() {
     nightKwhConsumption: 0
   })
 
+  const [activeService, setActiveService] = useState('electricity')
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [pricesData, setPricesData] = useState([])
@@ -210,7 +211,7 @@ function App() {
 
       <Nav onCtaClick={handleCtaClick} sidebarOpen={sidebarOpen} onSidebarToggle={handleSidebarToggle} />
       <main>
-        <Hero formData={formData} setFormData={setFormData} onFormSubmit={handleFormSubmit} providersData={providersData} pricesData={pricesData} />
+        <Hero formData={formData} setFormData={setFormData} onFormSubmit={handleFormSubmit} providersData={providersData} pricesData={pricesData} activeService={activeService} setActiveService={setActiveService} />
         <Suspense fallback={null}>
           <Features />
           <HowItWorks />
@@ -233,6 +234,7 @@ function App() {
           onPlanSelect={handlePlanSelect}
           selectedPlan={selectedPlan}
           providersData={providersData}
+          activeService={activeService}
         />
         <PlanDetailSidebar
           isOpen={detailSidebarOpen}

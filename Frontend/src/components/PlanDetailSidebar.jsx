@@ -221,7 +221,6 @@ export default function PlanDetailSidebar({ isOpen, onClose, selectedPlan, formD
   const afmValid = (() => {
     const afm = detailForm.afm.trim()
     if (!/^\d{9}$/.test(afm)) return false
-    // Greek AFM mod-11 checksum
     let sum = 0
     for (let i = 0; i < 8; i++) sum += parseInt(afm[i]) * (1 << (8 - i))
     return (sum % 11 % 10) === parseInt(afm[8])
@@ -273,7 +272,6 @@ export default function PlanDetailSidebar({ isOpen, onClose, selectedPlan, formD
       }
       if (!detailForm.onomaDikaiouhou.trim()) errors.push(t('detail.validationBeneficiary'))
       if (!detailForm.onomaTrapezas.trim()) errors.push(t('detail.validationBank'))
-      if (detailForm.ibanTritosProsopo && files.ypeuthiniDilosiIban.length === 0) errors.push(t('detail.validationIbanDeclaration'))
     }
 
     // --- Gas tenant owner details ---
@@ -284,24 +282,6 @@ export default function PlanDetailSidebar({ isOpen, onClose, selectedPlan, formD
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(detailForm.emailIdioktiti.trim())) errors.push(t('detail.validationOwnerEmail'))
     }
 
-    // --- Required uploads based on visible step-2 sections ---
-    if (isProviderChange && detailForm.ofeilesPalioParoxou) {
-      if (files.diakanonismos.length === 0) errors.push(t('detail.validationSettlement'))
-      if (files.pliromiTeleftaiasDosis.length === 0) errors.push(t('detail.validationLastInstallment'))
-    }
-    if (detailForm.protiSyndesi && files.symvasiDeddie.length === 0) errors.push(t('detail.validationDeddie'))
-    if (isIdioktitisE9 && files.e9.length === 0) errors.push(t('detail.validationE9'))
-    if (isParaxorisi && files.ypeuthiniDilosiParaxorisis.length === 0) errors.push(t('detail.validationAssignment'))
-    if (isGasMetritis && files.metritisAeriou.length === 0) errors.push(t('detail.validationGasMeter'))
-
-    // --- Professional business-type uploads ---
-    if (isProfessional) {
-      if (detailForm.tiposEpixeirisis === 'Ατομική' && files.enarxiDrastiriotitas.length === 0) errors.push(t('detail.validationBusinessStart'))
-      if (detailForm.tiposEpixeirisis === 'Εταιρία') {
-        if (files.katastatiko.length === 0) errors.push(t('detail.validationArticles'))
-        if (files.tautotitaNomimouEkprosopou.length === 0) errors.push(t('detail.validationLegalRepId'))
-      }
-    }
 
     return errors
   }

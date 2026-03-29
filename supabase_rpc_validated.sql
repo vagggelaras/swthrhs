@@ -48,10 +48,9 @@ BEGIN
     RAISE EXCEPTION 'Invalid name: must be at most 255 characters, got % chars', length(v_name);
   END IF;
 
-  -- ── Validate region: allowed values only ───────────────────
-  IF v_region IS NULL OR v_region NOT IN ('attiki', 'thessaloniki', 'patra', 'larisa', 'other') THEN
-    RAISE EXCEPTION 'Invalid region: must be one of attiki, thessaloniki, patra, larisa, other — got "%"',
-      COALESCE(v_region, 'NULL');
+  -- ── Validate region: allowed values only (optional — not required for electricity-only) ──
+  IF v_region IS NOT NULL AND v_region <> '' AND v_region NOT IN ('attiki', 'thessaloniki', 'patra', 'larisa', 'other') THEN
+    RAISE EXCEPTION 'Invalid region: must be one of attiki, thessaloniki, patra, larisa, other — got "%"', v_region;
   END IF;
 
   -- ── Validate contact_time: allowed values only ─────────────
@@ -142,13 +141,14 @@ BEGIN
   -- Greek IBAN: "GR" followed by exactly 25 digits (27 chars total).
   -- IBAN mod-97 check: move first 4 chars to end, convert letters
   -- to numbers (A=10..Z=35), resulting number mod 97 must equal 1.
-  IF p_detail_form IS NOT NULL AND p_detail_form ? 'iban' THEN
-    v_iban := upper(trim(p_detail_form->>'iban'));
+  IF p_detail_form IS NOT NULL AND p_detail_form ? 'iban'
+     AND p_detail_form->>'iban' IS NOT NULL
+     AND trim(p_detail_form->>'iban') <> '' THEN
+    v_iban := upper(replace(trim(p_detail_form->>'iban'), ' ', ''));
 
     -- Format check: GR + 25 digits
-    IF v_iban IS NULL OR v_iban !~ '^GR\d{25}$' THEN
-      RAISE EXCEPTION 'Invalid IBAN: must match GR followed by 25 digits, got "%"',
-        COALESCE(v_iban, 'NULL');
+    IF v_iban !~ '^GR\d{25}$' THEN
+      RAISE EXCEPTION 'Invalid IBAN: must match GR followed by 25 digits, got "%"', v_iban;
     END IF;
 
     -- IBAN mod-97 check
