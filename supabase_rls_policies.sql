@@ -35,76 +35,13 @@ AS $$
 $$;
 
 -- ════════════════════════════════════════════════════════════
--- 3. RPC: upsert_submission
---    Αντικαθιστά τα direct SELECT+INSERT/UPDATE στο frontend
+-- 3. RPCs: ΔΕΝ ορίζονται εδώ — βλ. supabase_rpc_validated.sql
+--    Εκεί βρίσκονται οι upsert_submission και
+--    update_submission_details ΜΕ server-side validation.
 -- ════════════════════════════════════════════════════════════
-CREATE OR REPLACE FUNCTION public.upsert_submission(
-  p_lead_info    jsonb,
-  p_electricity_info jsonb
-)
-RETURNS uuid
-LANGUAGE plpgsql
-SECURITY DEFINER
-AS $$
-DECLARE
-  v_phone  text;
-  v_id     uuid;
-BEGIN
-  v_phone := p_lead_info->>'phone';
-
-  -- Find existing submission by phone only
-  SELECT id INTO v_id
-  FROM public.submissions
-  WHERE lead_info->>'phone' = v_phone
-  LIMIT 1;
-
-  IF v_id IS NOT NULL THEN
-    -- Update existing — keep status & uploaded files intact
-    UPDATE public.submissions
-    SET lead_info        = p_lead_info,
-        electricity_info = p_electricity_info,
-        submitted_at     = now()
-    WHERE id = v_id;
-  ELSE
-    -- Insert new
-    INSERT INTO public.submissions (lead_info, electricity_info, submitted_at, status)
-    VALUES (p_lead_info, p_electricity_info, now(), 'Νέο')
-    RETURNING id INTO v_id;
-  END IF;
-
-  RETURN v_id;
-END;
-$$;
 
 -- ════════════════════════════════════════════════════════════
--- 4. RPC: update_submission_details
---    Αντικαθιστά τα direct UPDATE στο PlanDetailSidebar
--- ════════════════════════════════════════════════════════════
-CREATE OR REPLACE FUNCTION public.update_submission_details(
-  p_id              uuid,
-  p_selected_plan   jsonb DEFAULT NULL,
-  p_detail_form     jsonb DEFAULT NULL,
-  p_uploaded_files  jsonb DEFAULT NULL
-)
-RETURNS void
-LANGUAGE plpgsql
-SECURITY DEFINER
-AS $$
-BEGIN
-  UPDATE public.submissions
-  SET selected_plan  = COALESCE(p_selected_plan, selected_plan),
-      detail_form    = COALESCE(p_detail_form, detail_form),
-      uploaded_files = COALESCE(p_uploaded_files, uploaded_files)
-  WHERE id = p_id;
-
-  IF NOT FOUND THEN
-    RAISE EXCEPTION 'Submission % not found', p_id;
-  END IF;
-END;
-$$;
-
--- ════════════════════════════════════════════════════════════
--- 5. Enable RLS on all tables
+-- 4. Enable RLS on all tables
 -- ════════════════════════════════════════════════════════════
 ALTER TABLE public.submissions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.plans       ENABLE ROW LEVEL SECURITY;

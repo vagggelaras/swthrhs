@@ -52,7 +52,7 @@ cd SwthrhsDashboard && npm run build
 - **Error messages**: Generic user-facing messages; raw Supabase errors only shown in dev mode.
 - **SVG sanitization**: Provider logos stripped of scripts/event handlers before storage.
 - **Security headers**: X-Content-Type-Options, Referrer-Policy on both apps.
-- Full audit in `SECURITY_AUDIT.md`.
+- Full audit in `PRE_PRODUCTION_AUDIT.md`.
 
 ## Key architecture
 
@@ -76,6 +76,10 @@ cd SwthrhsDashboard && npm run build
 
 `.github/workflows/deploy.yml` — push to main triggers build+deploy. Node 20. Sets `PUPPETEER_SKIP_DOWNLOAD=true`. Supabase keys from GitHub secrets.
 
-## Known issues (see TODO.txt)
+## Known issues
 
-`LighitngBackground.jsx` filename typo, `FormulaBuilder` component unused, dead footer links. Rate limiting not yet implemented. Phone-based deduplication in `upsert_submission` could collide if two users share a phone number.
+Rate limiting not yet implemented. Phone-based deduplication in `upsert_submission` could collide if two users share a phone number. See `PRE_PRODUCTION_AUDIT.md` for full list.
+
+## Deployment
+
+See `DEPLOYMENT_GUIDE.md` for custom domain setup instructions.

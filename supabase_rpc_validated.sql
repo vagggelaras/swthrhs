@@ -54,8 +54,8 @@ BEGIN
   END IF;
 
   -- ── Validate contact_time: allowed values only ─────────────
-  IF v_contact_time IS NULL OR v_contact_time NOT IN ('anytime', 'morning', 'noon', 'evening') THEN
-    RAISE EXCEPTION 'Invalid contact_time: must be one of anytime, morning, noon, evening — got "%"',
+  IF v_contact_time IS NULL OR v_contact_time NOT IN ('anytime', 'morning', 'noon', 'afternoon', 'evening') THEN
+    RAISE EXCEPTION 'Invalid contact_time: must be one of anytime, morning, noon, afternoon, evening — got "%"',
       COALESCE(v_contact_time, 'NULL');
   END IF;
 
