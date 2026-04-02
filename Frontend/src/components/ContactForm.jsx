@@ -210,11 +210,11 @@ export default function ContactForm({ formData, setFormData, onFormSubmit, provi
 
                 <div className="form-buttons">
                     {step > 1 && (
-                        <button type="button" onClick={handleBack} className="back-btn">
+                        <button type="button" onClick={handleBack} className="back-btn" aria-label="Προηγούμενο βήμα">
                             <i className="fa-solid fa-arrow-left"></i>
                         </button>
                     )}
-                    <button type={step === 3 ? 'submit' : 'button'} onClick={step !== 3 ? handleNext : undefined} className="next-btn">
+                    <button type={step === 3 ? 'submit' : 'button'} onClick={step !== 3 ? handleNext : undefined} className="next-btn" aria-label={step !== 3 ? 'Επόμενο βήμα' : undefined}>
                         {step !== 3 ? <i className="fa-solid fa-arrow-right fa-xl"></i> : t('form.callMe')}
                     </button>
                 </div>
