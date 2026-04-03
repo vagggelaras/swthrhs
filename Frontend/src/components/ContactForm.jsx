@@ -1,13 +1,12 @@
-import { useState } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import { useTranslation } from '../context/LanguageContext'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronDown, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import SpecificInfo from './formSteps/SpecificInfo'
 import BasicInfo from './formSteps/BasicInfo'
 import ProviderInfo from './formSteps/ProviderInfo'
 import Lightning from './LighitngBackground'
-import LiquidEther from './LiquidEther';
 import './styles/ContactForm.css'
+
+const LiquidEther = lazy(() => import('./LiquidEther'))
 
 const GAS_COLORS = ['#00b64c', '#00d8cd', '#90E0EF']
 const GAS_STYLE = { position: 'absolute' }
@@ -116,7 +115,7 @@ export default function ContactForm({ formData, setFormData, onFormSubmit, provi
                 <Lightning hue={260} xOffset={0} speed={0.5} intensity={0.6} size={2} />
             )}
             {activeService === 'gas' && (
-                <LiquidEther
+                <Suspense fallback={null}><LiquidEther
                     className="ether-background"
                     style={GAS_STYLE}
                     colors={GAS_COLORS}
@@ -135,7 +134,7 @@ export default function ContactForm({ formData, setFormData, onFormSubmit, provi
                     autoResumeDelay={0}
                     autoRampDuration={0.6}
                     disableMouse
-                />
+                /></Suspense>
             )}
             <div className="form-content">
                 <div className="form-header">
@@ -162,7 +161,7 @@ export default function ContactForm({ formData, setFormData, onFormSubmit, provi
                         onClick={() => handleToggle('electricity', activeService === 'electricity')}
                     >
                             {t('common.electricity')}
-                        <FontAwesomeIcon icon={faChevronDown} className="toggle-arrow" />
+                        <svg className="toggle-arrow" width="12" height="12" viewBox="0 0 320 512" fill="currentColor"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9S303 192 288 192H32c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>
                     </button>
                     <button
                         type="button"
@@ -170,7 +169,7 @@ export default function ContactForm({ formData, setFormData, onFormSubmit, provi
                         onClick={() => handleToggle('gas', activeService === 'gas')}
                     >
                         {t('common.gas')}
-                        <FontAwesomeIcon icon={faChevronDown} className="toggle-arrow" />
+                        <svg className="toggle-arrow" width="12" height="12" viewBox="0 0 320 512" fill="currentColor"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9S303 192 288 192H32c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>
                     </button>
                     <button
                         type="button"
@@ -178,7 +177,7 @@ export default function ContactForm({ formData, setFormData, onFormSubmit, provi
                         onClick={() => handleToggle('both', activeService === 'both')}
                     >
                         {t('common.both')}
-                        <FontAwesomeIcon icon={faChevronDown} className="toggle-arrow" />
+                        <svg className="toggle-arrow" width="12" height="12" viewBox="0 0 320 512" fill="currentColor"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9S303 192 288 192H32c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>
                     </button>
                 </div>
 
@@ -213,11 +212,11 @@ export default function ContactForm({ formData, setFormData, onFormSubmit, provi
                 <div className="form-buttons">
                     {step > 1 && (
                         <button type="button" onClick={handleBack} className="back-btn" aria-label="Προηγούμενο βήμα">
-                            <FontAwesomeIcon icon={faArrowLeft} />
+                            <svg width="16" height="16" viewBox="0 0 448 512" fill="currentColor"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H109.2l105.4-105.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
                         </button>
                     )}
                     <button type={step === 3 ? 'submit' : 'button'} onClick={step !== 3 ? handleNext : undefined} className="next-btn" aria-label={step !== 3 ? 'Επόμενο βήμα' : undefined}>
-                        {step !== 3 ? <FontAwesomeIcon icon={faArrowRight} size="xl" /> : t('form.callMe')}
+                        {step !== 3 ? <svg width="20" height="20" viewBox="0 0 448 512" fill="currentColor"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h306.7L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg> : t('form.callMe')}
                     </button>
                 </div>
 
