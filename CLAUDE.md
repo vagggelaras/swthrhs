@@ -7,7 +7,7 @@ Greek energy provider comparison platform. Two React apps sharing one Supabase b
 | App | Path | Port | Base path | Deploy URL |
 |-----|------|------|-----------|------------|
 | Frontend (public site) | `Frontend/` | 5173 | `/swthrhs/` | vagggelaras.github.io/swthrhs/ |
-| Admin Dashboard | `SwthrhsDashboard/` | 5174 | `/SwthrhsDashboard/` | vagggelaras.github.io/SwthrhsDashboard/ |
+| Admin Dashboard | `SwthrhsDashboard/` (separate repo) | 5174 | `/SwthrhsDashboard/` | vagggelaras.github.io/SwthrhsDashboard/ |
 
 ## Stack
 
