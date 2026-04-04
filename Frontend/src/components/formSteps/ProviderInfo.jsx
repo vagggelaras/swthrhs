@@ -1,20 +1,10 @@
-import { useMemo } from 'react'
 import { useTranslation } from '../../context/LanguageContext'
 import '../styles/ProviderInfo.css'
 
-export default function ProviderInfo({ formData, setFormData, throwError, setThrowError, activeService, providersData, pricesData }) {
+export default function ProviderInfo({ formData, setFormData, throwError, setThrowError, providersData }) {
     const { t } = useTranslation()
 
-    const providers = useMemo(() => {
-        if (!providersData) return []
-        if (activeService === 'both') return providersData
-        const providerIdsWithPlans = new Set(
-            (pricesData || [])
-                .filter(p => p.service_type === activeService)
-                .map(p => p.provider)
-        )
-        return providersData.filter(p => providerIdsWithPlans.has(p.name))
-    }, [providersData, pricesData, activeService])
+    const providers = providersData || []
 
     const handleSelect = (providerId) => {
         setFormData(prev => ({ ...prev, provider: providerId }))
