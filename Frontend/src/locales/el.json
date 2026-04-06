@@ -165,7 +165,10 @@
     "basePrice": "Βασική τιμή προμηθευτή",
     "lowerLimit": "Κάτω όριο ΤΑΕ",
     "upperLimit": "Άνω όριο ΤΑΕ",
-    "adjustmentFactor": "Συντελεστής αναπροσαρμογής"
+    "adjustmentFactor": "Συντελεστής αναπροσαρμογής",
+    "duration": "Διάρκεια",
+    "months": "μήνες",
+    "vat": "ΦΠΑ 6%"
   },
   "detail": {
     "programDetails": "Στοιχεία Προγράμματος",
@@ -181,6 +184,8 @@
     "service": "Υπηρεσία:",
     "packageName": "Όνομα πακέτου:",
     "providerName": "Όνομα παρόχου:",
+    "duration": "Διάρκεια συμβολαίου:",
+    "months": "μήνες",
     "personalInfo": "Προσωπικά Στοιχεία",
     "idPassport": "Ταυτότητα / Διαβατήριο",
     "afm": "ΑΦΜ",

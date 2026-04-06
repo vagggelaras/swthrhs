@@ -631,8 +631,8 @@ export default function PlanDetailSidebar({ isOpen, onClose, selectedPlan, formD
                         </div>
                         {selectedPlan.duration && (
                           <div className="detail-plan-row">
-                            <span className="detail-plan-label">Διάρκεια</span>
-                            <span className="detail-plan-value">{selectedPlan.duration} μήνες</span>
+                            <span className="detail-plan-label">{t('detail.duration')}</span>
+                            <span className="detail-plan-value">{selectedPlan.duration} {t('detail.months')}</span>
                           </div>
                         )}
                       </div>

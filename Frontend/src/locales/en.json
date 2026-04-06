@@ -165,7 +165,10 @@
     "basePrice": "Base provider price",
     "lowerLimit": "Lower TAE limit",
     "upperLimit": "Upper TAE limit",
-    "adjustmentFactor": "Adjustment factor"
+    "adjustmentFactor": "Adjustment factor",
+    "duration": "Contract duration",
+    "months": "months",
+    "vat": "VAT 6%"
   },
   "detail": {
     "programDetails": "Program Details",
@@ -181,6 +184,8 @@
     "service": "Service:",
     "packageName": "Package name:",
     "providerName": "Provider name:",
+    "duration": "Contract duration:",
+    "months": "months",
     "personalInfo": "Personal Information",
     "idPassport": "ID / Passport",
     "afm": "VAT Number",
