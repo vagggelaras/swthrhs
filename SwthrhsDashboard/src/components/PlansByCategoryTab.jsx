@@ -340,7 +340,8 @@ export default function PlansByCategoryTab({ serviceType, refreshKey }) {
       monthly_fee_eur: plan.monthly_fee_eur ?? '',
       duration: plan.duration ?? '',
       social_tariff: plan.social_tariff,
-      pricing_tiers: parseTiers(plan.pricing_tiers)
+      pricing_tiers: parseTiers(plan.pricing_tiers),
+      info_text: plan.info_text ?? ''
     })
     setError(null)
   }
@@ -382,7 +383,8 @@ export default function PlansByCategoryTab({ serviceType, refreshKey }) {
       monthly_fee_eur: editData.monthly_fee_eur !== '' ? safeNumber(editData.monthly_fee_eur, null) : null,
       duration: editData.duration || null,
       social_tariff: editData.social_tariff,
-      pricing_tiers: serializeTiers(editData.pricing_tiers)
+      pricing_tiers: serializeTiers(editData.pricing_tiers),
+      info_text: editData.info_text || null
     }
     const { error } = await supabase.from('plans').update(updateData).eq('id', editPlan.id)
     if (error) { setError('Προέκυψε σφάλμα. Δοκιμάστε ξανά.'); return }
@@ -672,6 +674,17 @@ export default function PlansByCategoryTab({ serviceType, refreshKey }) {
                 />
                 Κοινωνικό τιμολόγιο
               </label>
+            </div>
+
+            <div className="ep-field">
+              <label className="ep-label">Κείμενο Πακέτου</label>
+              <textarea
+                className="ep-input ep-textarea"
+                value={editData.info_text}
+                onChange={e => setEditData({ ...editData, info_text: e.target.value })}
+                rows={3}
+                placeholder="Κείμενο που εμφανίζεται στο frontend..."
+              />
             </div>
 
             {error && <div className="error-msg">{error}</div>}

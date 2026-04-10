@@ -53,7 +53,7 @@ function App() {
       try {
         const { supabase } = await import('./lib/supabase')
         const [plansRes, settingsRes, providersRes] = await Promise.all([
-          supabase.from('plans').select('*, providers(name, adjustment_factor, logo_url, info_text)'),
+          supabase.from('plans').select('*, providers(name, adjustment_factor, logo_url)'),
           supabase.from('settings').select('key, value'),
           supabase.from('providers').select('id, name, logo_url').order('name')
         ])
@@ -82,7 +82,7 @@ function App() {
           provider: plan.providers.name,
           adjustment_factor: plan.providers.adjustment_factor,
           provider_logo: plan.providers.logo_url,
-          provider_info: plan.providers.info_text || '',
+          provider_info: plan.info_text || '',
           service_type: plan.service_type,
           plan: plan.plan_name,
           tariff_type: plan.tariff_type,

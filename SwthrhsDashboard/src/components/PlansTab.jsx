@@ -18,7 +18,8 @@ const emptyForm = {
   provider_id: '',
   plan_name: '',
   tariff_type: TARIFF_TYPES[0],
-  duration: ''
+  duration: '',
+  info_text: ''
 }
 
 export default function PlansTab({ serviceType, refreshKey }) {
@@ -100,7 +101,8 @@ export default function PlansTab({ serviceType, refreshKey }) {
       plan_name: form.plan_name,
       tariff_type: form.tariff_type,
       service_type: serviceType,
-      duration: form.duration || null
+      duration: form.duration || null,
+      info_text: form.info_text || null
     }
     const { error } = await supabase.from('plans').insert(insertData)
     if (error) { setError('Προέκυψε σφάλμα. Δοκιμάστε ξανά.'); return }
@@ -116,7 +118,8 @@ export default function PlansTab({ serviceType, refreshKey }) {
       provider_id: plan.provider_id,
       plan_name: plan.plan_name,
       tariff_type: plan.tariff_type,
-      duration: plan.duration ?? ''
+      duration: plan.duration ?? '',
+      info_text: plan.info_text ?? ''
     })
     setError(null)
   }
@@ -139,7 +142,8 @@ export default function PlansTab({ serviceType, refreshKey }) {
         provider_id: editData.provider_id,
         plan_name: editData.plan_name,
         tariff_type: editData.tariff_type,
-        duration: editData.duration || null
+        duration: editData.duration || null,
+        info_text: editData.info_text || null
       })
       .eq('id', editPlan.id)
     if (error) { setError('Προέκυψε σφάλμα. Δοκιμάστε ξανά.'); return }
@@ -188,6 +192,7 @@ export default function PlansTab({ serviceType, refreshKey }) {
                 <th>Plan Name</th>
                 <th>Tariff Type</th>
                 <th>Διάρκεια</th>
+                <th>Κείμενο</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -198,6 +203,7 @@ export default function PlansTab({ serviceType, refreshKey }) {
                   <td>{p.plan_name}</td>
                   <td><span className="tariff-badge">{p.tariff_type}</span></td>
                   <td>{p.duration || '—'}</td>
+                  <td className="info-text-cell">{p.info_text || '—'}</td>
                   <td className="actions">
                     <button className="btn-edit" onClick={() => openEdit(p)}>Edit</button>
                     <button className="btn-delete" onClick={() => handleDelete(p.id)}>Delete</button>
@@ -205,7 +211,7 @@ export default function PlansTab({ serviceType, refreshKey }) {
                 </tr>
               ))}
               {filtered.length === 0 && (
-                <tr><td colSpan="5" className="empty-row">{search ? 'Κανένα αποτέλεσμα' : 'Δεν υπάρχουν plans'}</td></tr>
+                <tr><td colSpan="6" className="empty-row">{search ? 'Κανένα αποτέλεσμα' : 'Δεν υπάρχουν plans'}</td></tr>
               )}
             </tbody>
           </table>
@@ -258,6 +264,15 @@ export default function PlansTab({ serviceType, refreshKey }) {
                   value={form.duration}
                   onChange={e => setForm({ ...form, duration: e.target.value })}
                   placeholder="π.χ. 12"
+                />
+              </label>
+              <label>
+                Κείμενο Πακέτου
+                <textarea
+                  value={form.info_text}
+                  onChange={e => setForm({ ...form, info_text: e.target.value })}
+                  placeholder="Κείμενο που εμφανίζεται στο frontend..."
+                  rows={3}
                 />
               </label>
               <div className="modal-actions">
@@ -327,6 +342,17 @@ export default function PlansTab({ serviceType, refreshKey }) {
                 value={editData.duration}
                 onChange={e => setEditData({ ...editData, duration: e.target.value })}
                 placeholder="π.χ. 12"
+              />
+            </div>
+
+            <div className="ep-field">
+              <label className="ep-label">Κείμενο Πακέτου</label>
+              <textarea
+                className="ep-input ep-textarea"
+                value={editData.info_text}
+                onChange={e => setEditData({ ...editData, info_text: e.target.value })}
+                rows={3}
+                placeholder="Κείμενο που εμφανίζεται στο frontend..."
               />
             </div>
 

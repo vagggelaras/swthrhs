@@ -106,7 +106,6 @@ export default function ProvidersTab({ serviceType, refreshKey }) {
     setEditData({
       name: provider.name,
       adjustment_factor: provider.adjustment_factor ?? '',
-      info_text: provider.info_text ?? '',
       has_gas: provider.has_gas ?? false,
       logo_svg: dataUriToSvg(provider.logo_url),
     })
@@ -119,7 +118,6 @@ export default function ProvidersTab({ serviceType, refreshKey }) {
     const { error } = await supabase.from('providers').update({
       name: editData.name,
       adjustment_factor: editData.adjustment_factor !== '' ? safeNumber(editData.adjustment_factor, null) : null,
-      info_text: editData.info_text || '',
       has_gas: editData.has_gas,
       logo_url: svgToDataUri(editData.logo_svg),
     }).eq('id', editProvider.id)
@@ -166,7 +164,7 @@ export default function ProvidersTab({ serviceType, refreshKey }) {
                 <th>Logo</th>
                 <th>Όνομα</th>
                 <th>Adjustment Factor</th>
-                <th>Κείμενο</th>
+
                 <th>Αέριο</th>
                 <th>Ημ/νία</th>
                 <th>Actions</th>
@@ -183,7 +181,7 @@ export default function ProvidersTab({ serviceType, refreshKey }) {
                   </td>
                   <td>{p.name}</td>
                   <td>{p.adjustment_factor ?? '—'}</td>
-                  <td className="info-text-cell">{p.info_text || '—'}</td>
+
                   <td className="center-cell">
                     <input type="checkbox" checked={!!p.has_gas} onChange={() => toggleGas(p)} />
                   </td>
@@ -195,7 +193,7 @@ export default function ProvidersTab({ serviceType, refreshKey }) {
                 </tr>
               ))}
               {filtered.length === 0 && (
-                <tr><td colSpan="7" className="empty-row">{search ? 'Κανένα αποτέλεσμα' : 'Δεν υπάρχουν providers'}</td></tr>
+                <tr><td colSpan="6" className="empty-row">{search ? 'Κανένα αποτέλεσμα' : 'Δεν υπάρχουν providers'}</td></tr>
               )}
             </tbody>
           </table>
@@ -289,17 +287,6 @@ export default function ProvidersTab({ serviceType, refreshKey }) {
                 step="any"
                 value={editData.adjustment_factor}
                 onChange={e => setEditData({ ...editData, adjustment_factor: e.target.value })}
-              />
-            </div>
-
-            <div className="ep-field">
-              <label className="ep-label">Κείμενο Παρόχου</label>
-              <textarea
-                className="ep-input ep-textarea"
-                value={editData.info_text}
-                onChange={e => setEditData({ ...editData, info_text: e.target.value })}
-                rows={3}
-                placeholder="Κείμενο παρόχου..."
               />
             </div>
 
