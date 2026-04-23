@@ -13,8 +13,8 @@ const Footer = memo(function Footer() {
           EnergyCompare
         </a>
         <div className="footer-links">
-          <a href="/swthrhs/terms" target="_blank" rel="noopener noreferrer">{t('footer.terms')}</a>
-          <a href="/swthrhs/privacy" target="_blank" rel="noopener noreferrer">{t('footer.privacy')}</a>
+          <a href={`${import.meta.env.BASE_URL}terms`} target="_blank" rel="noopener noreferrer">{t('footer.terms')}</a>
+          <a href={`${import.meta.env.BASE_URL}privacy`} target="_blank" rel="noopener noreferrer">{t('footer.privacy')}</a>
           <a href="mailto:info@energycompare.gr">{t('footer.contact')}</a>
         </div>
         <p className="footer-copy">{t('footer.copyright')}</p>

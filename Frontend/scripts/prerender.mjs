@@ -7,9 +7,9 @@ const distPath = resolve('dist')
 const indexPath = resolve(distPath, 'index.html')
 const originalHtml = readFileSync(indexPath, 'utf-8')
 
-// Simple static server that maps /swthrhs/* -> dist/*
+// Simple static server that maps /energy/* -> dist/*
 const server = createServer((req, res) => {
-  let filePath = req.url.replace(/^\/swthrhs/, '').split('?')[0]
+  let filePath = req.url.replace(/^\/energy/, '').split('?')[0]
   if (filePath === '/' || filePath === '') filePath = '/index.html'
 
   const fullPath = join(distPath, filePath)
@@ -31,7 +31,7 @@ const server = createServer((req, res) => {
 })
 
 await new Promise(r => server.listen(4444, r))
-console.log('Server running at http://localhost:4444/swthrhs/')
+console.log('Server running at http://localhost:4444/energy/')
 
 try {
   const browser = await puppeteer.launch({
@@ -51,7 +51,7 @@ try {
     }
   })
 
-  await page.goto('http://localhost:4444/swthrhs/', { waitUntil: 'networkidle0', timeout: 30000 })
+  await page.goto('http://localhost:4444/energy/', { waitUntil: 'networkidle0', timeout: 30000 })
 
   // Wait for React components to render
   await page.waitForSelector('.feature-card', { timeout: 10000 }).catch(() => {
