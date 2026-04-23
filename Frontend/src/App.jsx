@@ -53,9 +53,9 @@ function App() {
       try {
         const { supabase } = await import('./lib/supabase')
         const [plansRes, settingsRes, providersRes] = await Promise.all([
-          supabase.from('plans').select('*, providers(name, adjustment_factor)').is('demo_session_id', null),
+          supabase.from('plans').select('*, providers(name, adjustment_factor)'),
           supabase.from('settings').select('key, value'),
-          supabase.from('providers').select('id, name, logo_url').is('demo_session_id', null).order('name')
+          supabase.from('providers').select('id, name, logo_url').order('name')
         ])
 
         if (plansRes.error) {
